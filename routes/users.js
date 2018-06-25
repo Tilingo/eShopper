@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
   const newUser = new User(req.body)
   newUser.save().then(user => {
     res.send({
-      
+      user
     })
   })
 })
