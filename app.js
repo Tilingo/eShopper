@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
   })
 
 app.use('/api/users', usersRouter)
-// app.use('/api/users/userId/stores', storesRouter)
-// app.use('/api/users/userId/stores/storeId/products', productsRouter)
+app.use('/api/users/:userId/stores', storesRouter)
+// app.use('/api/users/:userId/stores/:storeId/products', productsRouter)
 
 module.exports = app;
