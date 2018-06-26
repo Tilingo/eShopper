@@ -13,7 +13,6 @@ class App extends Component {
   getUsers = () => {
     axios.get('/api/users').then(res=>{
       this.setState({users: res.data.users})
-      console.log(res)
     })
   }
 
