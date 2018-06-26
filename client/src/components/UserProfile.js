@@ -4,7 +4,7 @@ import axios from 'axios'
 class UserProfile extends Component {
 
     state={
-        user: {}
+        user: {},
     }
 
     getUser = () => {
@@ -25,9 +25,12 @@ class UserProfile extends Component {
 
         return (
             <div>
-                <ul>
-                    <li>E-mail Address: {this.state.user.e_mail} </li>
-                </ul>
+                <h1>Pofile</h1>
+                <label htmlFor="e_mail">E-mail Address</label>
+                <input type="text" name="e_mail" value={this.state.user.e_mail}/>
+
+                <label htmlFor="userName">User Name</label>
+                <input type="text" name="userName" value={this.state.user.userName}/>
             </div>
         );
     }
