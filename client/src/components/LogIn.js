@@ -12,6 +12,7 @@ searchUser = (event) =>{
     const user = this.props.users.find((user) => user.userName === this.state.userName)
     if(user.userName === this.state.userName && user.password === this.state.password){
         this.props.history.push(`/users/${user._id}`)
+        this.props.logIn(user._id)
     }
     else{
         alert('User Name or Password incorrect')

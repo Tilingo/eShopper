@@ -7,7 +7,18 @@ import LogIn from './components/LogIn';
 class App extends Component {
 
   state={
-    users: []
+    users: [],
+    isLoggedIn: {
+      loggedIn: false,
+      userId: ''
+    }
+  }
+
+  logIn = (userId) => {
+    this.setState({
+      loggedIn: true,
+      userId: userId
+    })
   }
 
   getUsers = () => {
@@ -18,6 +29,7 @@ class App extends Component {
 
   logInWrapp = (props) =>(
     <LogIn 
+    logIn={this.logIn}
     users={this.state.users}
     {...props}/>
   )
