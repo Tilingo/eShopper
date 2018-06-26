@@ -3,12 +3,17 @@ import axios from 'axios'
 
 class UserProfile extends Component {
 
+    state={
+        user: {}
+    }
+
     getUser = () => {
         const userId = this.props.match.params.id
-        console.log(userId)
 
         axios.get(`/api/users/${userId}`).then(res=>
-            console.log(res)
+            this.setState({
+                user: res.data.user
+            })
         )
     }
 
@@ -20,9 +25,9 @@ class UserProfile extends Component {
 
         return (
             <div>
-                {
-                    // this.props.users.find(user=> user._id === this.props.match.params.id).userName
-                }
+                <ul>
+                    <li>E-mail Address: {this.state.user.e_mail} </li>
+                </ul>
             </div>
         );
     }
