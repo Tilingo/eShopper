@@ -54,11 +54,14 @@ class UserProfile extends Component {
         console.log("This is the store key", id)
     }
 
-    deleteProduct = (id) => {
-        // const userId = this.state.user._id
-        // const storeId = this.state.user.store.id
-
-        console.log("This is the product key", id)
+    deleteProduct = (productId, storeId) => {
+        const userId = this.state.user._id
+        // console.log("product id: ", productId, "store id: ", storeId)
+        axios.delete(`/api/users/${userId}/stores/${storeId}/products/${productId}`).then((res)=>{
+            console.log("Deleted")
+            this.props.history.push(`/users/`)
+            this.props.history.push(`/users/${userId}`)
+        })
     }
 
     componentDidMount() {
@@ -100,7 +103,7 @@ class UserProfile extends Component {
                                             <li>Price: ${product.price}</li>
                                             <li>Description: {product.description}</li>
                                             <li>QTY: {product.qty}</li>
-                                            <button onClick={() => this.deleteProduct(product._id)}>DELETE PRODUCT</button>
+                                            <button onClick={() => this.deleteProduct(product._id, store._id)}>DELETE PRODUCT</button>
                                         </ul>
                                     )
                                 })}
