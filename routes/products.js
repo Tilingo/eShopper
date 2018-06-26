@@ -59,4 +59,18 @@ router.patch('/:id', (req, res) =>{
         })
 })
 
+router.delete('/:id', (req, res)=> {
+    User.findById(req.params.userId)
+    .then(user => {
+        const product = user.stores.id(req.params.storeId).products.id(req.params.id)
+        product.remove()
+        return user.save()
+    })
+    .then((user)=>{
+        res.send({
+            user
+        })
+    })
+})
+
 module.exports = router
