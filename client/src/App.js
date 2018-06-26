@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
+import UserProfile from './components/UserProfile';
 
 class App extends Component {
 
-  state={
+  state = {
     users: [],
     isLoggedIn: {
       loggedIn: false,
@@ -22,32 +23,39 @@ class App extends Component {
   }
 
   getUsers = () => {
-    axios.get('/api/users').then(res=>{
-      this.setState({users: res.data.users})
+    axios.get('/api/users').then(res => {
+      this.setState({ users: res.data.users })
     })
   }
 
-  logInWrapp = (props) =>(
-    <LogIn 
-    logIn={this.logIn}
-    users={this.state.users}
-    {...props}/>
+  logInWrapp = (props) => (
+    <LogIn
+      logIn={this.logIn}
+      users={this.state.users}
+      {...props} />
   )
-  
-  componentDidMount(){
+
+  userProfileWrap = (props) => (
+    <UserProfile
+      users={this.state.users}
+      {...props} />
+  )
+
+  componentDidMount() {
     this.getUsers()
   }
 
   render() {
     return (
-     <Router>
-       <div>
-         <Switch>
-           <Route exact path="/signup" component={SignUp}/>
-           <Route exact path="/login" render={this.logInWrapp}/>
-         </Switch>
-       </div>
-     </Router>
+      <Router>
+        <div>
+          <Switch>
+            <Route exact path="/signup" component={SignUp} />
+            <Route path="/users/:id" render={this.userProfileWrap} />
+            <Route exact path="/login" render={this.logInWrapp} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
