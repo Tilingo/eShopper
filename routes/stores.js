@@ -23,7 +23,16 @@ router.post('/', (req, res) => {
             newStore
         })
     })
+})
 
+router.get('/:id', (req, res)=>{
+    User.findById(req.params.userId)
+    .then(user=>{
+        const store = user.stores.id(req.params.id)
+        res.send({
+            store
+        })
+    })
 })
 
 module.exports = router
