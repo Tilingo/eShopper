@@ -12,12 +12,15 @@ class App extends Component {
 
   getUsers = () => {
     axios.get('/api/users').then(res=>{
+      this.setState({users: res.data.users})
       console.log(res)
     })
   }
 
   logInWrapp = (props) =>(
-    <LogIn {...props}/>
+    <LogIn 
+    users={this.state.users}
+    {...props}/>
   )
   
   componentDidMount(){
