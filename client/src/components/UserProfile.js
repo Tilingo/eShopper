@@ -47,6 +47,20 @@ class UserProfile extends Component {
         })
     }
 
+    deleteStore = (id) => {
+        // const userId = this.state.user._id
+        // const storeId = this.state.user.store.id
+
+        console.log("This is the store key", id)
+    }
+
+    deleteProduct = (id) => {
+        // const userId = this.state.user._id
+        // const storeId = this.state.user.store.id
+
+        console.log("This is the product key", id)
+    }
+
     componentDidMount() {
         this.getUser()
     }
@@ -57,7 +71,7 @@ class UserProfile extends Component {
 
         return (
             <div>
-                <h1>Pofile</h1>
+                <h1>Profile</h1>
 
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="e_mail">E-mail Address</label>
@@ -69,28 +83,31 @@ class UserProfile extends Component {
                     <button type="submit">UPDATE</button>
                 </form>
 
+                <button onClick={this.deleteUser}>DELETE USER</button>
+
                 <div>
                     {user.stores.map((store, i) => {
                         return (
                             <div key={i}>
-                                <p>{store.description}</p>
-                                <p>{store.name}</p>
+                                <h2>{store.name}</h2>
+                                <h3>{store.description}</h3>
+                                <button onClick={() => this.deleteStore(store._id)}>DELETE STORE</button>
+
                                 {store.products.map((product, ind) => {
                                     return (
-                                        <div key={ind}>
-                                            <p>{product.name}</p>
-                                            <p>{product.price}</p>
-                                            <p>{product.description}</p>
-                                            <p>{product.qty}</p>
-                                        </div>
+                                        <ul key={ind}>
+                                            <li>Name: {product.name}</li>
+                                            <li>Price: ${product.price}</li>
+                                            <li>Description: {product.description}</li>
+                                            <li>QTY: {product.qty}</li>
+                                            <button onClick={() => this.deleteProduct(product._id)}>DELETE PRODUCT</button>
+                                        </ul>
                                     )
                                 })}
                             </div>
                         )
                     })}
                 </div>
-
-                <button onClick={this.deleteUser}>DELETE</button>
 
             </div>
         );
