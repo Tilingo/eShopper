@@ -38,4 +38,25 @@ router.post('/', (req, res) => {
         })
 })
 
+router.patch('/:id', (req, res) =>{
+    
+    User.findById(req.params.userId)
+        .then(user => {
+
+        const product = user.stores.id(req.params.storeId).products.id(req.params.id)
+
+            product.name = req.body.name
+            product.price = req.body.price
+            product.description = req.body.description
+            product.qty = req.body.qty
+
+            return user.save()
+        })
+        .then(user=>{
+            res.send({
+                product: user.stores.id(req.params.storeId).products.id(req.params.id)
+            })
+        })
+})
+
 module.exports = router
