@@ -37,6 +37,7 @@ class App extends Component {
 
   userProfileWrap = (props) => (
     <UserProfile
+    users={this.state.users}
       {...props} />
   )
 
