@@ -13,6 +13,16 @@ router.get('/', (req, res) => {
         })
 })
 
+router.get('/:id', (req, res) => {
+    User.findById(req.params.userId)
+        .then(user => {
+            const product = user.stores.id(req.params.storeId).products.id(req.params.id)
+            res.send({
+                product
+            })
+        })
+})
+
 
 
 module.exports = router
