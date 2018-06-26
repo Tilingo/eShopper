@@ -23,6 +23,19 @@ router.get('/:id', (req, res) => {
         })
 })
 
+router.post('/', (req, res) => {
+    const newProduct = new Product(req.body)
 
+    User.findById(req.params.userId)
+        .then(user => {
+            user.stores.id(req.params.storeId).products.push(newProduct)
+            return user.save()
+        })
+        .then(() => {
+            res.send({
+                newProduct
+            })
+        })
+})
 
 module.exports = router
