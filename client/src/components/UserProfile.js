@@ -39,6 +39,15 @@ class UserProfile extends Component {
         })
     }
 
+    deleteUser = () => {
+        const userId = this.state.user._id
+
+        axios.delete(`/api/users/${userId}`).then(res=>{
+            alert('User Deleted')
+            this.props.history.push(`/`)
+        })
+    }
+
     componentDidMount() {
         this.getUser()
     }
@@ -58,6 +67,8 @@ class UserProfile extends Component {
 
                     <button type="submit">UPDATE</button>
                 </form>
+
+                <button onClick={this.deleteUser}>DELETE</button>
 
             </div>
         );
