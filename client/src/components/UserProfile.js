@@ -25,6 +25,7 @@ class UserProfile extends Component {
         })
     }
 
+    ///////USERS FUNCTIONS//////////////
     handleChange = (event) => {
         const inputName = event.target.name
         const userInput = event.target.value
@@ -52,35 +53,11 @@ class UserProfile extends Component {
             this.props.history.push(`/`)
         })
     }
+    //////////END OF USERS FUNCTIONS//////
 
-    deleteStore = (id) => {
-        const userId = this.state.user._id
-
-        axios.delete(`/api/users/${userId}/stores/${id}`).then((res) => {
-            this.props.history.push(`/users/`)
-            this.props.history.push(`/users/${userId}`)
-        })
-    }
-
-    deleteProduct = (productId, storeId) => {
-        const userId = this.state.user._id
-        axios.delete(`/api/users/${userId}/stores/${storeId}/products/${productId}`).then((res) => {
-            console.log("Deleted")
-            this.props.history.push(`/users/`)
-            this.props.history.push(`/users/${userId}`)
-        })
-    }
-
+    //////////STORE FUNCTIONS//////////
     showStoreForm = () => {
         this.state.storeForm ? this.setState({ storeForm: false }) : this.setState({ storeForm: true })
-    }
-
-    showStoreEditForm = (id) => {
-        this.setState({storeToEdit: id})
-    }
-
-    closeStoreEditForm = () => {
-        this.setState({storeToEdit: ''})
     }
 
     handleStoreChange = (event) => {
@@ -101,6 +78,44 @@ class UserProfile extends Component {
             this.props.history.push(`/users/${userId}`)
         })
     }
+
+    showStoreEditForm = (id) => {
+        this.setState({ storeToEdit: id })
+    }
+
+    closeStoreEditForm = () => {
+        this.setState({ storeToEdit: '' })
+    }
+
+    handleEditStoreSubmit = (event, id) => {
+        event.preventDefault()
+        const userId = this.state.user._id
+
+        axios.patch(`/api/users/${userId}/stores/${id}`, this.state.newStore).then((res) => {
+            this.props.history.push(`/users/`)
+            this.props.history.push(`/users/${userId}`)
+        })
+    }
+
+    deleteStore = (id) => {
+        const userId = this.state.user._id
+
+        axios.delete(`/api/users/${userId}/stores/${id}`).then((res) => {
+            this.props.history.push(`/users/`)
+            this.props.history.push(`/users/${userId}`)
+        })
+    }
+    ///////END OF STORE FUNCTIONS/////////////
+
+    ////////PRODUCT FUNCTIONS
+    deleteProduct = (productId, storeId) => {
+        const userId = this.state.user._id
+        axios.delete(`/api/users/${userId}/stores/${storeId}/products/${productId}`).then((res) => {
+            this.props.history.push(`/users/`)
+            this.props.history.push(`/users/${userId}`)
+        })
+    }
+    ///////END OF PRODUCT FUNCTIONS
 
     componentDidMount() {
         this.getUser()
@@ -137,32 +152,16 @@ class UserProfile extends Component {
 
                 <div>
                     {user.stores.map((store, i) => {
-                        // let editForm = (
-                        //     <div>
-                        //         <h2>{store.name}</h2>
-                        //         <h3>{store.description}</h3>
-                        //         <button onClick={() => this.deleteStore(store._id)}>DELETE STORE</button>
-                        //         <button onClick={this.showStoreEditForm}>EDIT STORE</button>
-                        //     </div>
-                        // )
-                        // if (this.state.storeEditForm) {
-                        //     editForm = (
-                        //         <form>
-                        //             <input onChange={this.handleStoreChange} type="text" name="name" placeholder="My Example's Store" />
-                        //             <input onChange={this.handleStoreChange} type="text" name="description" placeholder="My store is amazing and has great products" />
-                        //             <button onClick={this.showStoreEditForm}>GO BACK</button>
-                        //         </form>
-                        //     )
-                        // }
 
                         return (
                             <div key={i}>
 
                                 {this.state.storeToEdit == store._id
-                                    ? <form>
-                                        <input onChange={this.handleStoreChange} type="text" name="name" placeholder="My Example's Store" />
-                                        <input onChange={this.handleStoreChange} type="text" name="description" placeholder="My store is amazing and has great products" />
+                                    ? <form onSubmit={(event) => this.handleEditStoreSubmit(event, store._id)}>
+                                        <input onChange={this.handleStoreChange} type="text" name="name" placeholder={store.name} />
+                                        <input onChange={this.handleStoreChange} type="text" name="description" placeholder={store.description} />
                                         <button onClick={this.closeStoreEditForm}>GO BACK</button>
+                                        <button type="submit">UPDATE STORE</button>
                                     </form>
                                     : <div>
                                         <h2>{store.name}</h2>
