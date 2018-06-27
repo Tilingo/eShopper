@@ -8,6 +8,7 @@ class UserProfile extends Component {
             stores: []
         },
         storeForm: false,
+        storeToEdit: '',
         newStore: {
             name: '',
             description: ''
@@ -55,7 +56,7 @@ class UserProfile extends Component {
     deleteStore = (id) => {
         const userId = this.state.user._id
 
-        axios.delete(`/api/users/${userId}/stores/${id}`).then((res)=>{
+        axios.delete(`/api/users/${userId}/stores/${id}`).then((res) => {
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
         })
@@ -63,7 +64,7 @@ class UserProfile extends Component {
 
     deleteProduct = (productId, storeId) => {
         const userId = this.state.user._id
-        axios.delete(`/api/users/${userId}/stores/${storeId}/products/${productId}`).then((res)=>{
+        axios.delete(`/api/users/${userId}/stores/${storeId}/products/${productId}`).then((res) => {
             console.log("Deleted")
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
@@ -71,7 +72,15 @@ class UserProfile extends Component {
     }
 
     showStoreForm = () => {
-        this.state.storeForm ? this.setState({storeForm: false}) : this.setState({storeForm: true})
+        this.state.storeForm ? this.setState({ storeForm: false }) : this.setState({ storeForm: true })
+    }
+
+    showStoreEditForm = (id) => {
+        this.setState({storeToEdit: id})
+    }
+
+    closeStoreEditForm = () => {
+        this.setState({storeToEdit: ''})
     }
 
     handleStoreChange = (event) => {
@@ -87,7 +96,7 @@ class UserProfile extends Component {
         event.preventDefault()
         const userId = this.state.user._id
 
-        axios.post(`/api/users/${userId}/stores`, this.state.newStore).then((res)=>{
+        axios.post(`/api/users/${userId}/stores`, this.state.newStore).then((res) => {
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
         })
@@ -119,20 +128,49 @@ class UserProfile extends Component {
 
                 <button onClick={this.showStoreForm}>NEW STORE</button>
                 {this.state.storeForm
-                ? <form onSubmit={this.handleStoreSubmit}>
-                    <input onChange={this.handleStoreChange} type="text" name="name" placeholder="My Example's Store"/>
-                    <input onChange={this.handleStoreChange} type="text" name="description" placeholder="My store is amazing and has great products"/>
-                    <button type="submit">CREATE STORE</button>
-                </form>
-                : null}
+                    ? <form onSubmit={this.handleStoreSubmit}>
+                        <input onChange={this.handleStoreChange} type="text" name="name" placeholder="My Example's Store" />
+                        <input onChange={this.handleStoreChange} type="text" name="description" placeholder="My store is amazing and has great products" />
+                        <button type="submit">CREATE STORE</button>
+                    </form>
+                    : null}
 
                 <div>
                     {user.stores.map((store, i) => {
+                        // let editForm = (
+                        //     <div>
+                        //         <h2>{store.name}</h2>
+                        //         <h3>{store.description}</h3>
+                        //         <button onClick={() => this.deleteStore(store._id)}>DELETE STORE</button>
+                        //         <button onClick={this.showStoreEditForm}>EDIT STORE</button>
+                        //     </div>
+                        // )
+                        // if (this.state.storeEditForm) {
+                        //     editForm = (
+                        //         <form>
+                        //             <input onChange={this.handleStoreChange} type="text" name="name" placeholder="My Example's Store" />
+                        //             <input onChange={this.handleStoreChange} type="text" name="description" placeholder="My store is amazing and has great products" />
+                        //             <button onClick={this.showStoreEditForm}>GO BACK</button>
+                        //         </form>
+                        //     )
+                        // }
+
                         return (
                             <div key={i}>
-                                <h2>{store.name}</h2>
-                                <h3>{store.description}</h3>
-                                <button onClick={() => this.deleteStore(store._id)}>DELETE STORE</button>
+
+                                {this.state.storeToEdit == store._id
+                                    ? <form>
+                                        <input onChange={this.handleStoreChange} type="text" name="name" placeholder="My Example's Store" />
+                                        <input onChange={this.handleStoreChange} type="text" name="description" placeholder="My store is amazing and has great products" />
+                                        <button onClick={this.closeStoreEditForm}>GO BACK</button>
+                                    </form>
+                                    : <div>
+                                        <h2>{store.name}</h2>
+                                        <h3>{store.description}</h3>
+                                        <button onClick={() => this.deleteStore(store._id)}>DELETE STORE</button>
+                                        <button onClick={() => this.showStoreEditForm(store._id)}>EDIT STORE</button>
+                                    </div>
+                                }
 
                                 {store.products.map((product, ind) => {
                                     return (
