@@ -48,10 +48,12 @@ class UserProfile extends Component {
     }
 
     deleteStore = (id) => {
-        // const userId = this.state.user._id
-        // const storeId = this.state.user.store.id
+        const userId = this.state.user._id
 
-        console.log("This is the store key", id)
+        axios.delete(`/api/users/${userId}/stores/${id}`).then((res)=>{
+            this.props.history.push(`/users/`)
+            this.props.history.push(`/users/${userId}`)
+        })
     }
 
     deleteProduct = (productId, storeId) => {
