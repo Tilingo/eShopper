@@ -133,7 +133,25 @@ class UserProfile extends Component {
         event.preventDefault()
         const userId = this.state.user._id
 
-        axios.post(`/api/users/${userId}/stores/${storeId}/products`, this.state.newProduct).then((res)=>{
+        axios.post(`/api/users/${userId}/stores/${storeId}/products`, this.state.newProduct).then((res) => {
+            this.props.history.push(`/users/`)
+            this.props.history.push(`/users/${userId}`)
+        })
+    }
+
+    showProductEditForm = (id) => {
+        this.setState({ productToEdit: id })
+    }
+
+    closeProductEditForm = () => {
+        this.setState({ productToEdit: '' })
+    }
+
+    handleEditProductSubmit = (event, storeId, productId) => {
+        event.preventDefault()
+        const userId = this.state.user._id
+
+        axios.patch(`/api/users/${userId}/stores/${storeId}/products/${productId}`, this.state.newProduct).then((res) => {
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
         })
@@ -202,26 +220,40 @@ class UserProfile extends Component {
 
                                         <button onClick={this.showProductForm} >NEW PRODUCT</button>
                                         {this.state.productForm
-                                        ?<form onSubmit={(event) => this.handleProductSubmit(event, store._id)}>
-                                            <input onChange={this.handleProductChange} type="text" name="name" placeholder="Product's Name"/>
-                                            <input onChange={this.handleProductChange} type="number" name="price" placeholder="Product's Price"/>
-                                            <input onChange={this.handleProductChange} type="text" name="description" placeholder="Product's Description"/>
-                                            <input onChange={this.handleProductChange} type="number" name="qty" placeholder="Number of Products in Stock"/>
-                                            <button type="submit">CREATE PRODUCT</button>
-                                        </form>
-                                        :null}
+                                            ? <form onSubmit={(event) => this.handleProductSubmit(event, store._id)}>
+                                                <input onChange={this.handleProductChange} type="text" name="name" placeholder="Product's Name" />
+                                                <input onChange={this.handleProductChange} type="number" name="price" placeholder="Product's Price" />
+                                                <input onChange={this.handleProductChange} type="text" name="description" placeholder="Product's Description" />
+                                                <input onChange={this.handleProductChange} type="number" name="qty" placeholder="Number of Products in Stock" />
+                                                <button type="submit">CREATE PRODUCT</button>
+                                            </form>
+                                            : null}
                                     </div>
                                 }
 
                                 {store.products.map((product, ind) => {
                                     return (
-                                        <ul key={ind}>
-                                            <li>Name: {product.name}</li>
-                                            <li>Price: ${product.price}</li>
-                                            <li>Description: {product.description}</li>
-                                            <li>QTY: {product.qty}</li>
-                                            <button onClick={() => this.deleteProduct(product._id, store._id)}>DELETE PRODUCT</button>
-                                        </ul>
+
+                                        <div key={ind}>
+                                            {this.state.productToEdit == product._id
+                                                ? <form onSubmit={(event) => this.handleEditProductSubmit(event, store._id, product._id)}>
+                                                    <input onChange={this.handleProductChange} type="text" name="name" placeholder={product.name} />
+                                                    <input onChange={this.handleProductChange} type="number" name="price" placeholder={product.price} />
+                                                    <input onChange={this.handleProductChange} type="text" name="description" placeholder={product.description} />
+                                                    <input onChange={this.handleProductChange} type="number" name="qty" placeholder={product.qty} />
+                                                    <button type="submit">UPDATE</button>
+                                                    <button onClick={this.closeProductEditForm}>GO BACK</button>
+                                                </form>
+                                                : <ul>
+                                                    <li>Name: {product.name}</li>
+                                                    <li>Price: ${product.price}</li>
+                                                    <li>Description: {product.description}</li>
+                                                    <li>QTY: {product.qty}</li>
+                                                    <button onClick={() => this.deleteProduct(product._id, store._id)}>DELETE PRODUCT</button>
+                                                    <button onClick={() => this.showProductEditForm(product._id)}>EDIT PRODUCT</button>
+                                                </ul>}
+                                        </div>
+
                                     )
                                 })}
                             </div>
