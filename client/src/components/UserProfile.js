@@ -12,6 +12,14 @@ class UserProfile extends Component {
         newStore: {
             name: '',
             description: ''
+        },
+        productForm: false,
+        productToEdit: '',
+        newProduct: {
+            name: '',
+            price: 0,
+            description: '',
+            qty: 0
         }
     }
 
@@ -108,6 +116,29 @@ class UserProfile extends Component {
     ///////END OF STORE FUNCTIONS/////////////
 
     ////////PRODUCT FUNCTIONS
+    showProductForm = () => {
+        this.state.productForm ? this.setState({ productForm: false }) : this.setState({ productForm: true })
+    }
+
+    handleProductChange = (event) => {
+        const inputName = event.target.name
+        const userInput = event.target.value
+        const newState = { ...this.state }
+
+        newState.newProduct[inputName] = userInput
+        this.setState(newState)
+    }
+
+    handleProductSubmit = (event, storeId) => {
+        event.preventDefault()
+        const userId = this.state.user._id
+
+        axios.post(`/api/users/${userId}/stores/${storeId}/products`, this.state.newProduct).then((res)=>{
+            this.props.history.push(`/users/`)
+            this.props.history.push(`/users/${userId}`)
+        })
+    }
+
     deleteProduct = (productId, storeId) => {
         const userId = this.state.user._id
         axios.delete(`/api/users/${userId}/stores/${storeId}/products/${productId}`).then((res) => {
@@ -168,6 +199,17 @@ class UserProfile extends Component {
                                         <h3>{store.description}</h3>
                                         <button onClick={() => this.deleteStore(store._id)}>DELETE STORE</button>
                                         <button onClick={() => this.showStoreEditForm(store._id)}>EDIT STORE</button>
+
+                                        <button onClick={this.showProductForm} >NEW PRODUCT</button>
+                                        {this.state.productForm
+                                        ?<form onSubmit={(event) => this.handleProductSubmit(event, store._id)}>
+                                            <input onChange={this.handleProductChange} type="text" name="name" placeholder="Product's Name"/>
+                                            <input onChange={this.handleProductChange} type="number" name="price" placeholder="Product's Price"/>
+                                            <input onChange={this.handleProductChange} type="text" name="description" placeholder="Product's Description"/>
+                                            <input onChange={this.handleProductChange} type="number" name="qty" placeholder="Number of Products in Stock"/>
+                                            <button type="submit">CREATE PRODUCT</button>
+                                        </form>
+                                        :null}
                                     </div>
                                 }
 
