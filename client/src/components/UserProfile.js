@@ -6,6 +6,11 @@ class UserProfile extends Component {
     state = {
         user: {
             stores: []
+        },
+        storeForm: false,
+        newStore: {
+            name: '',
+            description: ''
         }
     }
 
@@ -58,9 +63,31 @@ class UserProfile extends Component {
 
     deleteProduct = (productId, storeId) => {
         const userId = this.state.user._id
-        // console.log("product id: ", productId, "store id: ", storeId)
         axios.delete(`/api/users/${userId}/stores/${storeId}/products/${productId}`).then((res)=>{
             console.log("Deleted")
+            this.props.history.push(`/users/`)
+            this.props.history.push(`/users/${userId}`)
+        })
+    }
+
+    showStoreForm = () => {
+        this.state.storeForm ? this.setState({storeForm: false}) : this.setState({storeForm: true})
+    }
+
+    handleStoreChange = (event) => {
+        const inputName = event.target.name
+        const userInput = event.target.value
+        const newState = { ...this.state }
+
+        newState.newStore[inputName] = userInput
+        this.setState(newState)
+    }
+
+    handleStoreSubmit = (event) => {
+        event.preventDefault()
+        const userId = this.state.user._id
+
+        axios.post(`/api/users/${userId}/stores`, this.state.newStore).then((res)=>{
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
         })
@@ -89,6 +116,15 @@ class UserProfile extends Component {
                 </form>
 
                 <button onClick={this.deleteUser}>DELETE USER</button>
+
+                <button onClick={this.showStoreForm}>NEW STORE</button>
+                {this.state.storeForm
+                ? <form onSubmit={this.handleStoreSubmit}>
+                    <input onChange={this.handleStoreChange} type="text" name="name" placeholder="My Example's Store"/>
+                    <input onChange={this.handleStoreChange} type="text" name="description" placeholder="My store is amazing and has great products"/>
+                    <button type="submit">CREATE STORE</button>
+                </form>
+                : null}
 
                 <div>
                     {user.stores.map((store, i) => {
