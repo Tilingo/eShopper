@@ -6,6 +6,9 @@ flex-direction: row;
 justify-content: space-between;
 padding: 1.5%;
 background-color: lightblue;
+h1{
+    font-family: 'Shrikhand', cursive;
+}
 `
 
 export default MobileNav
