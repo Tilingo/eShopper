@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons'
 import MobileNav from './styles/MobileNav';
@@ -17,10 +17,19 @@ class NavBar extends Component {
     }
 
     showMenu = () => {
-        this.state.burgerMenu ? this.setState({ burgerMenu: false }) : this.setState({ burgerMenu: true })
+        this.setState({ burgerMenu: !this.state.burgerMenu })
+    }
+
+    logOut = () => {
+        localStorage.clear()
+        this.props.history.push('/')
     }
 
     render() {
+
+        const userId = localStorage.getItem('userId');
+        const isLogged = localStorage.getItem('loggedIn');
+
         return (
             <MobileMenuWrapp>
 
@@ -40,10 +49,16 @@ class NavBar extends Component {
                 {this.state.burgerMenu
                     ? <BurgerMenu>
                         <Link to="/" >Home</Link>
-                        <Link to="/" >Home</Link>
-                        <Link to="/" >Home</Link>
+                        {isLogged
+                            ? <div>
+                                <Link to={`/users/${userId}`} >Profile</Link>
+                                <button onClick={this.logOut}>Log Out</button>
+                            </div>
+
+                            : null}
                     </BurgerMenu>
                     : null}
+
 
 
             </MobileMenuWrapp>
@@ -51,4 +66,4 @@ class NavBar extends Component {
     }
 }
 
-export default NavBar;
+export default withRouter(NavBar);

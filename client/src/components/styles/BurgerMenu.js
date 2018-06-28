@@ -5,6 +5,10 @@ display: flex;
 justify-content: space-around;
 padding: 0 0 5% 0;
 animation: show 300ms ease-in-out;
+a{
+    text-decoration: none;
+    color: black;
+}
 
 @keyframes show {
     0%{

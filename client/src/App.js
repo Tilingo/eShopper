@@ -9,18 +9,13 @@ import NavBar from './components/NavBar';
 class App extends Component {
 
   state = {
-    users: [],
-    isLoggedIn: {
-      loggedIn: false,
-      userId: ''
-    }
+    users: []
   }
 
   logIn = (userId) => {
-    this.setState({
-      loggedIn: true,
-      userId: userId
-    })
+    localStorage.clear();
+    localStorage.setItem('loggedIn', 'true');
+    localStorage.setItem('userId', userId);
   }
 
   getUsers = () => {
@@ -42,10 +37,6 @@ class App extends Component {
       {...props} />
   )
 
-  // navBarWrapp = (props) => (
-  //   <NavBar {...props}/>
-  // )
-
   componentDidMount() {
     this.getUsers()
   }
@@ -54,7 +45,6 @@ class App extends Component {
     return (
       <Router>
         <div>
-          {/* {this.navBarWrapp()} */}
           <NavBar />
           <Switch>
             <Route exact path="/" component={SignUp} />
