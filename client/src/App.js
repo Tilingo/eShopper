@@ -4,6 +4,7 @@ import axios from 'axios'
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
 import UserProfile from './components/UserProfile';
+import NavBar from './components/NavBar';
 
 class App extends Component {
 
@@ -37,9 +38,13 @@ class App extends Component {
 
   userProfileWrap = (props) => (
     <UserProfile
-    users={this.state.users}
+      users={this.state.users}
       {...props} />
   )
+
+  // navBarWrapp = (props) => (
+  //   <NavBar {...props}/>
+  // )
 
   componentDidMount() {
     this.getUsers()
@@ -49,8 +54,10 @@ class App extends Component {
     return (
       <Router>
         <div>
+          {/* {this.navBarWrapp()} */}
+          <NavBar />
           <Switch>
-            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/" component={SignUp} />
             <Route path="/users/:id" render={this.userProfileWrap} />
             <Route exact path="/login" render={this.logInWrapp} />
           </Switch>

@@ -205,7 +205,7 @@ class UserProfile extends Component {
                         return (
                             <div key={i}>
 
-                                {this.state.storeToEdit == store._id
+                                {this.state.storeToEdit === store._id
                                     ? <form onSubmit={(event) => this.handleEditStoreSubmit(event, store._id)}>
                                         <input onChange={this.handleStoreChange} type="text" name="name" placeholder={store.name} />
                                         <input onChange={this.handleStoreChange} type="text" name="description" placeholder={store.description} />
@@ -235,7 +235,7 @@ class UserProfile extends Component {
                                     return (
 
                                         <div key={ind}>
-                                            {this.state.productToEdit == product._id
+                                            {this.state.productToEdit === product._id
                                                 ? <form onSubmit={(event) => this.handleEditProductSubmit(event, store._id, product._id)}>
                                                     <input onChange={this.handleProductChange} type="text" name="name" placeholder={product.name} />
                                                     <input onChange={this.handleProductChange} type="number" name="price" placeholder={product.price} />
