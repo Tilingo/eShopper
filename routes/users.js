@@ -27,9 +27,7 @@ router.post('/', async (req, res) => {
 })
 
 router.patch('/:id', async (req, res) =>{
-  console.log("Patching!", req.body)
   const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
-  console.log("Updated!", user)
   res.send({
     user
   })

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FormWrapp from './styles/FormWrap';
-import Button from './styles/Button';
+import {Button} from './styles/Button';
 import SignUpWrap from './styles/SignUpWrap';
 
 class LogIn extends Component {

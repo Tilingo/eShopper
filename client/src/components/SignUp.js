@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import SignUpWrapp from './styles/SignUpWrap';
-import Button from './styles/Button';
+import { Button } from './styles/Button';
 import FormWrap from './styles/FormWrap';
 
 class SignUp extends Component {

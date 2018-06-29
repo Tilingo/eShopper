@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import { ThemeProvider } from 'styled-components';
+import { Button, primary, danger, edit, create } from './styles/Button';
+import FormWrapp from './styles/FormWrap';
+import UserProfileWrap from './styles/UserProfileWrap';
+import UserInfoWrap from './styles/UserInfoWrap';
+import ButtonsWrap from './styles/ButtonsWrap';
+import ProductWrap from './styles/ProductWrap';
 
 class UserProfile extends Component {
 
@@ -180,96 +187,155 @@ class UserProfile extends Component {
         const user = this.state.user
 
         return (
-            <div>
-                <h1>Profile</h1>
+            <UserProfileWrap>
 
-                {this.state.userForm
-                ?<form onSubmit={this.handleSubmit}>
-                <label htmlFor="e_mail">E-mail Address</label>
-                <input onChange={this.handleChange} type="text" name="e_mail" value={user.e_mail} />
+                <UserInfoWrap>
+                    <h1>Profile</h1>
+                    {this.state.userForm
+                        ? <FormWrapp onSubmit={this.handleSubmit}>
+                            <label htmlFor="e_mail">E-mail Address</label>
+                            <input onChange={this.handleChange} type="text" name="e_mail" value={user.e_mail} />
 
-                <label htmlFor="userName">User Name</label>
-                <input onChange={this.handleChange} type="text" name="userName" value={user.userName} />
+                            <label htmlFor="userName">User Name</label>
+                            <input onChange={this.handleChange} type="text" name="userName" value={user.userName} />
 
-                <button type="submit">UPDATE</button>
-            </form>
-            : null}
-                
-                <button onClick={this.showUserForm}>EDIT USER</button>
-                <button onClick={this.deleteUser}>DELETE USER</button>
+                            <ThemeProvider theme={primary}>
+                                <Button type="submit">UPDATE</Button>
+                            </ThemeProvider>
 
-                <button onClick={this.showStoreForm}>NEW STORE</button>
-                {this.state.storeForm
-                    ? <form onSubmit={this.handleStoreSubmit}>
-                        <input onChange={this.handleStoreChange} type="text" name="name" placeholder="My Example's Store" />
-                        <input onChange={this.handleStoreChange} type="text" name="description" placeholder="My store is amazing and has great products" />
-                        <button type="submit">CREATE STORE</button>
-                    </form>
-                    : null}
+                        </FormWrapp>
+                        : <div>
+                            <h3>User Name: {user.userName}</h3>
+                            <h3>E-mail: {user.e_mail}</h3>
+                        </div>}
 
-                <div>
-                    {user.stores.map((store, i) => {
+                    <ButtonsWrap>
 
-                        return (
-                            <div key={i}>
+                        <ThemeProvider theme={edit}>
+                            <Button onClick={this.showUserForm}>EDIT USER</Button>
+                        </ThemeProvider>
 
-                                {this.state.storeToEdit === store._id
-                                    ? <form onSubmit={(event) => this.handleEditStoreSubmit(event, store._id)}>
-                                        <input onChange={this.handleStoreChange} type="text" name="name" placeholder={store.name} />
-                                        <input onChange={this.handleStoreChange} type="text" name="description" placeholder={store.description} />
-                                        <button onClick={this.closeStoreEditForm}>GO BACK</button>
-                                        <button type="submit">UPDATE STORE</button>
-                                    </form>
-                                    : <div>
-                                        <h2>{store.name}</h2>
-                                        <h3>{store.description}</h3>
-                                        <button onClick={() => this.deleteStore(store._id)}>DELETE STORE</button>
-                                        <button onClick={() => this.showStoreEditForm(store._id)}>EDIT STORE</button>
+                        <ThemeProvider theme={create}>
+                            <Button onClick={this.showStoreForm}>NEW STORE</Button>
+                        </ThemeProvider>
 
-                                        <button onClick={this.showProductForm} >NEW PRODUCT</button>
-                                        {this.state.productForm
-                                            ? <form onSubmit={(event) => this.handleProductSubmit(event, store._id)}>
-                                                <input onChange={this.handleProductChange} type="text" name="name" placeholder="Product's Name" />
-                                                <input onChange={this.handleProductChange} type="number" name="price" placeholder="Product's Price" />
-                                                <input onChange={this.handleProductChange} type="text" name="description" placeholder="Product's Description" />
-                                                <input onChange={this.handleProductChange} type="number" name="qty" placeholder="Number of Products in Stock" />
-                                                <button type="submit">CREATE PRODUCT</button>
-                                            </form>
-                                            : null}
+                        <ThemeProvider theme={danger}>
+                            <Button onClick={this.deleteUser}>DELETE USER</Button>
+                        </ThemeProvider>
+
+                    </ButtonsWrap>
+
+                    {this.state.storeForm
+                        ? <FormWrapp onSubmit={this.handleStoreSubmit}>
+                            <input onChange={this.handleStoreChange} type="text" name="name" placeholder="My Example's Store" />
+                            <input onChange={this.handleStoreChange} type="text" name="description" placeholder="My store is amazing and has great products" />
+                            <ThemeProvider theme={primary}>
+                                <Button type="submit" >CREATE STORE</Button>
+                            </ThemeProvider>
+                        </FormWrapp>
+                        : null}
+                </UserInfoWrap>
+
+
+
+
+
+                {user.stores.map((store, i) => {
+
+                    return (
+                        <UserInfoWrap key={i}>
+
+                            {this.state.storeToEdit === store._id
+                                ? <FormWrapp onSubmit={(event) => this.handleEditStoreSubmit(event, store._id)}>
+
+                                    <label htmlFor="name">Store's name</label>
+                                    <input onChange={this.handleStoreChange} type="text" name="name" placeholder={store.name} />
+
+                                    <label htmlFor="name">Store's description</label>
+                                    <input onChange={this.handleStoreChange} type="text" name="description" placeholder={store.description} />
+
+                                    <ButtonsWrap>
+                                        <Button onClick={this.closeStoreEditForm}>GO BACK</Button>
+
+                                        <ThemeProvider theme={primary}>
+                                            <Button type="submit" >UPDATE STORE</Button>
+                                        </ThemeProvider>
+                                    </ButtonsWrap>
+
+                                </FormWrapp>
+                                : <div>
+                                    <h2>{store.name}</h2>
+                                    <h3>{store.description}</h3>
+
+                                    <ButtonsWrap>
+                                        <ThemeProvider theme={edit}>
+                                            <Button onClick={() => this.showStoreEditForm(store._id)}>EDIT STORE</Button>
+                                        </ThemeProvider>
+                                        <ThemeProvider theme={create}>
+                                            <Button onClick={this.showProductForm}>NEW PRODUCT</Button>
+                                        </ThemeProvider>
+                                        <ThemeProvider theme={danger}>
+                                            <Button onClick={() => this.deleteStore(store._id)}>DELETE STORE</Button>
+                                        </ThemeProvider>
+                                    </ButtonsWrap>
+
+                                    {this.state.productForm
+                                        ? <FormWrapp onSubmit={(event) => this.handleProductSubmit(event, store._id)}>
+                                            <input onChange={this.handleProductChange} type="text" name="name" placeholder="Product's Name" />
+                                            <input onChange={this.handleProductChange} type="number" name="price" placeholder="Product's Price" />
+                                            <input onChange={this.handleProductChange} type="text" name="description" placeholder="Product's Description" />
+                                            <input onChange={this.handleProductChange} type="number" name="qty" placeholder="Number of Products in Stock" />
+                                            <ThemeProvider theme={create}>
+                                                <Button type="submit">CREATE PRODUCT</Button>
+                                            </ThemeProvider>
+                                        </FormWrapp>
+                                        : null}
+                                </div>
+                            }
+
+                            {store.products.map((product, ind) => {
+                                return (
+
+                                    <div key={ind}>
+                                        {this.state.productToEdit === product._id
+                                            ? <FormWrapp onSubmit={(event) => this.handleEditProductSubmit(event, store._id, product._id)}>
+                                                <input onChange={this.handleProductChange} type="text" name="name" placeholder={product.name} />
+                                                <input onChange={this.handleProductChange} type="number" name="price" placeholder={product.price} />
+                                                <input onChange={this.handleProductChange} type="text" name="description" placeholder={product.description} />
+                                                <input onChange={this.handleProductChange} type="number" name="qty" placeholder={product.qty} />
+
+                                                <ButtonsWrap>
+                                                    <ThemeProvider theme={primary}>
+                                                        <Button type="submit">UPDATE</Button>
+                                                    </ThemeProvider>
+                                                    <Button onClick={this.closeProductEditForm}>GO BACK</Button>
+                                                </ButtonsWrap>
+
+                                            </FormWrapp>
+                                            : <ProductWrap>
+                                                <h3>{product.name}</h3>
+                                                <p><span>Price:</span> ${product.price}</p>
+                                                <p><span>Description:</span> {product.description}</p>
+                                                <p><span>QTY:</span> {product.qty}</p>
+
+                                                <ButtonsWrap>
+                                                    <ThemeProvider theme={edit}>
+                                                        <Button onClick={() => this.showProductEditForm(product._id)}>EDIT PRODUCT</Button>
+                                                    </ThemeProvider>
+                                                    <ThemeProvider theme={danger}>
+                                                        <Button onClick={() => this.deleteProduct(product._id, store._id)}>DELETE PRODUCT</Button>
+                                                    </ThemeProvider>
+                                                </ButtonsWrap>
+                                            </ProductWrap>}
                                     </div>
-                                }
 
-                                {store.products.map((product, ind) => {
-                                    return (
+                                )
+                            })}
+                        </UserInfoWrap>
+                    )
+                })}
 
-                                        <div key={ind}>
-                                            {this.state.productToEdit === product._id
-                                                ? <form onSubmit={(event) => this.handleEditProductSubmit(event, store._id, product._id)}>
-                                                    <input onChange={this.handleProductChange} type="text" name="name" placeholder={product.name} />
-                                                    <input onChange={this.handleProductChange} type="number" name="price" placeholder={product.price} />
-                                                    <input onChange={this.handleProductChange} type="text" name="description" placeholder={product.description} />
-                                                    <input onChange={this.handleProductChange} type="number" name="qty" placeholder={product.qty} />
-                                                    <button type="submit">UPDATE</button>
-                                                    <button onClick={this.closeProductEditForm}>GO BACK</button>
-                                                </form>
-                                                : <ul>
-                                                    <li>Name: {product.name}</li>
-                                                    <li>Price: ${product.price}</li>
-                                                    <li>Description: {product.description}</li>
-                                                    <li>QTY: {product.qty}</li>
-                                                    <button onClick={() => this.deleteProduct(product._id, store._id)}>DELETE PRODUCT</button>
-                                                    <button onClick={() => this.showProductEditForm(product._id)}>EDIT PRODUCT</button>
-                                                </ul>}
-                                        </div>
-
-                                    )
-                                })}
-                            </div>
-                        )
-                    })}
-                </div>
-
-            </div>
+            </UserProfileWrap>
         );
     }
 }
