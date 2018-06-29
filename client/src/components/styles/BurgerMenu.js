@@ -6,13 +6,19 @@ align-items: center;
 max-width: 400px;
 min-width: 400px;
 justify-content: flex-start;
-/* animation: show 300ms ease-in; */
 
 a{
     text-decoration: none;
     color: black;
     font-size: 24px;
     font-weight: bold;
+
+    &:hover{
+        color: black;
+    }
+    &:active{
+        color: orange;
+    }
 }
 
 div{
@@ -27,7 +33,6 @@ div{
         font-weight: bold;
         border: none;
         background-color: transparent;
-        cursor: pointer;
     }
 }
 
@@ -41,9 +46,16 @@ div{
 }
 
 @media only screen and (min-width: 800px){
+    justify-content: space-around;
 
-justify-content: space-around;
-
+    a{
+        &:hover{
+            color: orange;
+        }
+        /* &:active{
+            color: orange;
+        } */
+    }
 }
 `
 

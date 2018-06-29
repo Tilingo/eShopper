@@ -4,7 +4,7 @@ import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import MobileNav from './styles/MobileNav';
 import BurgerMenu from './styles/BurgerMenu';
-import NavBarWrapp from './styles/NavBarWrapp';
+import NavBarWrap from './styles/NavBarWrap';
 import GoBack from './GoBack';
 
 class NavBar extends Component {
@@ -32,7 +32,7 @@ class NavBar extends Component {
         const isLogged = localStorage.getItem('loggedIn');
 
         return (
-            <NavBarWrapp>
+            <NavBarWrap>
 
                 <MobileNav>
 
@@ -74,7 +74,7 @@ class NavBar extends Component {
 
 
 
-            </NavBarWrapp>
+            </NavBarWrap>
         );
     }
 }

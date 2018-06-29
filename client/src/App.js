@@ -6,7 +6,7 @@ import LogIn from './components/LogIn';
 import UserProfile from './components/UserProfile';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
-import AppWrapp from './components/styles/AppWrapp';
+import AppWrap from './components/styles/AppWrap';
 
 class App extends Component {
 
@@ -46,7 +46,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <AppWrapp>
+        <AppWrap>
           <NavBar />
           <Switch>
             <Route exact path="/" component={SignUp} />
@@ -54,7 +54,7 @@ class App extends Component {
             <Route exact path="/login" render={this.logInWrapp} />
           </Switch>
           <Footer/>
-        </AppWrapp>
+        </AppWrap>
       </Router>
     );
   }

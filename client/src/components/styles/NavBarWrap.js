@@ -20,7 +20,6 @@ min-height: 10vh;
     &:nth-child(1) :nth-child(4){
         display: flex;
     }
-
 }
 `
 
