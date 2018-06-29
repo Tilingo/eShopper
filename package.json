@@ -12,6 +12,7 @@
     "postinstall": "cd client && npm install && npm run build"
   },
   "dependencies": {
+    "alertify.js": "^1.0.12",
     "concurrently": "^3.6.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",

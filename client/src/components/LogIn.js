@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FormWrapp from './styles/FormWrap';
 import {Button} from './styles/Button';
 import SignUpWrap from './styles/SignUpWrap';
+import alertify from 'alertify.js'
 
 class LogIn extends Component {
 
@@ -19,7 +20,8 @@ searchUser = (event) =>{
         this.props.logIn(user._id)
     }
     else{
-        alert('User Name or Password incorrect')
+        // alert('User Name or Password incorrect')
+        alertify.alert("User Name or Password incorrect");
     }
 }
 
