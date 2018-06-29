@@ -7,6 +7,7 @@ class UserProfile extends Component {
         user: {
             stores: []
         },
+        userForm: false,
         storeForm: false,
         storeToEdit: '',
         newStore: {
@@ -44,6 +45,10 @@ class UserProfile extends Component {
         this.setState(newState)
     }
 
+    showUserForm = () => {
+        this.setState({ userForm: !this.state.userForm })
+    }
+
     handleSubmit = (event) => {
         event.preventDefault()
         const userId = this.state.user._id
@@ -65,7 +70,7 @@ class UserProfile extends Component {
 
     //////////STORE FUNCTIONS//////////
     showStoreForm = () => {
-        this.state.storeForm ? this.setState({ storeForm: false }) : this.setState({ storeForm: true })
+        this.setState({ storeForm: !this.state.storeForm })
     }
 
     handleStoreChange = (event) => {
@@ -178,16 +183,19 @@ class UserProfile extends Component {
             <div>
                 <h1>Profile</h1>
 
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="e_mail">E-mail Address</label>
-                    <input onChange={this.handleChange} type="text" name="e_mail" value={user.e_mail} />
+                {this.state.userForm
+                ?<form onSubmit={this.handleSubmit}>
+                <label htmlFor="e_mail">E-mail Address</label>
+                <input onChange={this.handleChange} type="text" name="e_mail" value={user.e_mail} />
 
-                    <label htmlFor="userName">User Name</label>
-                    <input onChange={this.handleChange} type="text" name="userName" value={user.userName} />
+                <label htmlFor="userName">User Name</label>
+                <input onChange={this.handleChange} type="text" name="userName" value={user.userName} />
 
-                    <button type="submit">UPDATE</button>
-                </form>
-
+                <button type="submit">UPDATE</button>
+            </form>
+            : null}
+                
+                <button onClick={this.showUserForm}>EDIT USER</button>
                 <button onClick={this.deleteUser}>DELETE USER</button>
 
                 <button onClick={this.showStoreForm}>NEW STORE</button>
