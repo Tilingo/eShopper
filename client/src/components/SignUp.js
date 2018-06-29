@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import SignUpWrapp from './styles/SignUpWrapp';
+import Button from './styles/Button';
+import FormWrapp from './styles/FormWrap';
 
 class SignUp extends Component {
 
@@ -29,16 +32,18 @@ class SignUp extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Sign Up</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <input onChange={this.handleChange} type="email" name="e_mail" placeholder="e-mail address" />
+            <SignUpWrapp>
+                <h1>Welcome!</h1>
+                <h3>Currently eShopper is under construction, so why don't you start creating your store too!</h3>
+                <h4>Sign up now and start creating stores</h4>
+                <FormWrapp onSubmit={this.handleSubmit}>
+                    <input onChange={this.handleChange} type="email" name="e_mail" placeholder="E-mail address" />
                     <input onChange={this.handleChange} type="text" name="userName" placeholder="User Name" />
                     <input onChange={this.handleChange} type="password" name="password" placeholder="Password" />
-                    <button type="submit">CREATE ACCOUNT</button>
-                </form>
-                <p>Already have an account? <Link to="/login" >Log in here</Link></p>
-            </div>
+                    <Button type="submit" primary>SIGN UP</Button>
+                </FormWrapp>
+                <p>Already have an account? <Link to="/login" >Log in</Link></p>
+            </SignUpWrapp>
         );
     }
 }

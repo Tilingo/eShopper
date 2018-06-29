@@ -5,6 +5,8 @@ import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
 import UserProfile from './components/UserProfile';
 import NavBar from './components/NavBar';
+import Footer from './components/Footer';
+import AppWrapp from './components/styles/AppWrapp';
 
 class App extends Component {
 
@@ -44,14 +46,15 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <AppWrapp>
           <NavBar />
           <Switch>
             <Route exact path="/" component={SignUp} />
             <Route path="/users/:id" render={this.userProfileWrap} />
             <Route exact path="/login" render={this.logInWrapp} />
           </Switch>
-        </div>
+          <Footer/>
+        </AppWrapp>
       </Router>
     );
   }

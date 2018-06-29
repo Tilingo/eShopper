@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import FormWrapp from './styles/FormWrap';
+import Button from './styles/Button';
+import SignUpWrapp from './styles/SignUpWrapp';
 
 class LogIn extends Component {
 
@@ -31,14 +34,14 @@ handleChange = (event) =>{
 
     render() {
         return (
-            <div>
+            <SignUpWrapp>
                 <h1>Log In</h1>
-                <form onSubmit={this.handleSubmit}>
+                <FormWrapp onSubmit={this.handleSubmit}>
                     <input onChange={this.handleChange} type="text" name="userName" placeholder="User Name"/>
                     <input onChange={this.handleChange} type="password" name="password" placeholder="Password"/>
-                    <button onClick={this.searchUser}>Log In</button>
-                </form>
-            </div>
+                    <Button primary onClick={this.searchUser}>Log In</Button>
+                </FormWrapp>
+            </SignUpWrapp>
         );
     }
 }

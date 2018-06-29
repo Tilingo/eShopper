@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom'
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons'
 import MobileNav from './styles/MobileNav';
 import BurgerMenu from './styles/BurgerMenu';
-import MobileMenuWrapp from './MobileMenuWrapp';
+import NavBarWrapp from './styles/NavBarWrapp';
+import GoBack from './GoBack';
 
 class NavBar extends Component {
 
@@ -31,23 +32,21 @@ class NavBar extends Component {
         const isLogged = localStorage.getItem('loggedIn');
 
         return (
-            <MobileMenuWrapp>
+            <NavBarWrapp>
 
                 <MobileNav>
-                    <button onClick={this.back}>
-                        <FontAwesomeIcon icon={faArrowLeft} size="3x" />
-                    </button>
+
+                    <GoBack goBack={this.back} />
 
                     <h1>eShopper</h1>
 
                     <button onClick={this.showMenu}>
-                        <FontAwesomeIcon icon={faBars} size="3x" />
+                        {this.state.burgerMenu
+                            ? <FontAwesomeIcon icon={faTimes} size="3x" />
+                            : <FontAwesomeIcon icon={faBars} size="3x" />}
                     </button>
-                </MobileNav>
 
-
-                {this.state.burgerMenu
-                    ? <BurgerMenu>
+                    <BurgerMenu>
                         <Link to="/" >Home</Link>
                         {isLogged
                             ? <div>
@@ -57,11 +56,25 @@ class NavBar extends Component {
 
                             : null}
                     </BurgerMenu>
+                </MobileNav>
+
+
+                {this.state.burgerMenu
+                    ? <BurgerMenu>
+                        <Link to="/">Home</Link>
+                        {isLogged
+                            ? <div>
+                                <Link to={`/users/${userId}`}>Profile</Link>
+                                <button onClick={this.logOut}>Log Out</button>
+                            </div>
+
+                            : null}
+                    </BurgerMenu>
                     : null}
 
 
 
-            </MobileMenuWrapp>
+            </NavBarWrapp>
         );
     }
 }
