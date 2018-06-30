@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import alertify from 'alertify.js'
 import { ThemeProvider } from 'styled-components';
 import { Button, primary, danger, edit, create } from './styles/Button';
 import FormWrapp from './styles/FormWrap';
@@ -64,15 +65,33 @@ class UserProfile extends Component {
             this.props.history.push(`/users/${res.data.user._id}`)
         })
     }
-
+    
     deleteUser = () => {
         const userId = this.state.user._id
 
         axios.delete(`/api/users/${userId}`).then(res => {
-            alert('User Deleted')
+            alertify.success("User Deleted");
             this.props.history.push(`/`)
         })
     }
+
+    confirmUserDelete = () => {
+
+        let that = this
+        
+        alertify
+            .okBtn("DELETE")
+            .cancelBtn("CANCEL")
+
+        alertify.confirm("Are you sure you want to delete this user?", function () {
+            that.deleteUser()
+        }, function () {
+            alertify.log("That was close");
+        });
+
+    }
+
+
     //////////END OF USERS FUNCTIONS//////
 
     //////////STORE FUNCTIONS//////////
@@ -220,7 +239,7 @@ class UserProfile extends Component {
                         </ThemeProvider>
 
                         <ThemeProvider theme={danger}>
-                            <Button onClick={this.deleteUser}>DELETE USER</Button>
+                            <Button onClick={this.confirmUserDelete}>DELETE USER</Button>
                         </ThemeProvider>
 
                     </ButtonsWrap>
