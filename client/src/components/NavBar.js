@@ -12,10 +12,12 @@ class NavBar extends Component {
 
     back = () => {
         this.props.history.goBack()
+        this.props.closeMenu()
     }
 
     logOut = () => {
         localStorage.clear()
+        this.props.closeMenu()
         this.props.history.push('/')
     }
 

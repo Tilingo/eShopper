@@ -59,7 +59,7 @@ class App extends Component {
       users={this.state.users}
       {...props} />
   )
-  
+
   componentDidMount() {
     this.getUsers()
   }
@@ -68,7 +68,7 @@ class App extends Component {
     return (
       <Router>
         <AppWrap>
-          <NavBar showMenu={this.showMenu} burgerMenu={this.state.burgerMenu}/>
+          <NavBar showMenu={this.showMenu} burgerMenu={this.state.burgerMenu} closeMenu={this.closeMenu}/>
           <Switch>
             <Route exact path="/" render={this.signUpWrapp} />
             <Route path="/users/:id" render={this.userProfileWrap} />
