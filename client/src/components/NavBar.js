@@ -6,24 +6,32 @@ import MobileNav from './styles/MobileNav';
 import BurgerMenu from './styles/BurgerMenu';
 import NavBarWrap from './styles/NavBarWrap';
 import GoBack from './GoBack';
+import alertify from 'alertify.js'
 
 class NavBar extends Component {
-
-    state = {
-        burgerMenu: false
-    }
 
     back = () => {
         this.props.history.goBack()
     }
 
-    showMenu = () => {
-        this.setState({ burgerMenu: !this.state.burgerMenu })
-    }
-
     logOut = () => {
         localStorage.clear()
         this.props.history.push('/')
+    }
+
+    confirmLogOut = () => {
+
+        let that = this
+
+        alertify
+            .okBtn("LOG OUT")
+            .cancelBtn("CANCEL")
+
+        alertify.confirm("Are You Sure You Want to Log Out?", function () {
+            that.logOut()
+        }, function () {
+            alertify.log("You Are Still Logged In");
+        });
     }
 
     render() {
@@ -40,8 +48,8 @@ class NavBar extends Component {
 
                     <h1>eShopper</h1>
 
-                    <button onClick={this.showMenu}>
-                        {this.state.burgerMenu
+                    <button onClick={this.props.showMenu}>
+                        {this.props.burgerMenu
                             ? <FontAwesomeIcon icon={faTimes} size="3x" />
                             : <FontAwesomeIcon icon={faBars} size="3x" />}
                     </button>
@@ -51,7 +59,7 @@ class NavBar extends Component {
                         {isLogged
                             ? <div>
                                 <Link to={`/users/${userId}`} >Profile</Link>
-                                <button onClick={this.logOut}>Log Out</button>
+                                <button onClick={this.confirmLogOut}>Log Out</button>
                             </div>
 
                             : null}
@@ -59,13 +67,13 @@ class NavBar extends Component {
                 </MobileNav>
 
 
-                {this.state.burgerMenu
+                {this.props.burgerMenu
                     ? <BurgerMenu>
                         <Link to="/">Home</Link>
                         {isLogged
                             ? <div>
                                 <Link to={`/users/${userId}`}>Profile</Link>
-                                <button onClick={this.logOut}>Log Out</button>
+                                <button onClick={this.confirmLogOut}>Log Out</button>
                             </div>
 
                             : null}

@@ -11,7 +11,16 @@ import AppWrap from './components/styles/AppWrap';
 class App extends Component {
 
   state = {
-    users: []
+    users: [],
+    burgerMenu: false
+  }
+
+  showMenu = () => {
+    this.setState({ burgerMenu: !this.state.burgerMenu })
+  }
+
+  closeMenu = () => {
+    this.setState({ burgerMenu: false })
   }
 
   logIn = (userId) => {
@@ -28,17 +37,29 @@ class App extends Component {
 
   logInWrapp = (props) => (
     <LogIn
+      closeMenu={this.closeMenu}
+      showMenu={this.showMenu}
       logIn={this.logIn}
       users={this.state.users}
       {...props} />
   )
 
-  userProfileWrap = (props) => (
-    <UserProfile
-      users={this.state.users}
+  signUpWrapp = (props) => (
+    <SignUp
+     closeMenu={this.closeMenu}
+      showMenu={this.showMenu}
+      logIn={this.logIn}
       {...props} />
   )
 
+  userProfileWrap = (props) => (
+    <UserProfile
+      closeMenu={this.closeMenu}
+      showMenu={this.showMenu}
+      users={this.state.users}
+      {...props} />
+  )
+  
   componentDidMount() {
     this.getUsers()
   }
@@ -47,13 +68,13 @@ class App extends Component {
     return (
       <Router>
         <AppWrap>
-          <NavBar />
+          <NavBar showMenu={this.showMenu} burgerMenu={this.state.burgerMenu}/>
           <Switch>
-            <Route exact path="/" component={SignUp} />
+            <Route exact path="/" render={this.signUpWrapp} />
             <Route path="/users/:id" render={this.userProfileWrap} />
             <Route exact path="/login" render={this.logInWrapp} />
           </Switch>
-          <Footer/>
+          <Footer />
         </AppWrap>
       </Router>
     );

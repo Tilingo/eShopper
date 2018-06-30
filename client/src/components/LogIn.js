@@ -15,7 +15,7 @@ class LogIn extends Component {
         event.preventDefault()
         const user = this.props.users.find((user) => user.userName === this.state.userName)
 
-        if (user == undefined) {
+        if (user === undefined) {
             alertify.alert("Please enter a valid User Name");
         }
         else if (user.userName === this.state.userName && user.password === this.state.password) {

@@ -73,6 +73,7 @@ class UserProfile extends Component {
 
         axios.delete(`/api/users/${userId}`).then(res => {
             alertify.success("User Deleted");
+            localStorage.clear()
             this.props.history.push(`/`)
         })
     }
