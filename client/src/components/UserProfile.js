@@ -62,7 +62,9 @@ class UserProfile extends Component {
         const userId = this.state.user._id
 
         axios.patch(`/api/users/${userId}`, this.state.user).then((res) => {
+            this.props.history.push(`/users`)
             this.props.history.push(`/users/${res.data.user._id}`)
+            alertify.success("User Updated");
         })
     }
     
@@ -78,7 +80,7 @@ class UserProfile extends Component {
     confirmUserDelete = () => {
 
         let that = this
-        
+
         alertify
             .okBtn("DELETE")
             .cancelBtn("CANCEL")
@@ -86,12 +88,10 @@ class UserProfile extends Component {
         alertify.confirm("Are you sure you want to delete this user?", function () {
             that.deleteUser()
         }, function () {
-            alertify.log("That was close");
+            alertify.log("Phew! That was close!");
         });
 
     }
-
-
     //////////END OF USERS FUNCTIONS//////
 
     //////////STORE FUNCTIONS//////////
@@ -115,6 +115,7 @@ class UserProfile extends Component {
         axios.post(`/api/users/${userId}/stores`, this.state.newStore).then((res) => {
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
+            alertify.success("New Store Created");
         })
     }
 
@@ -133,6 +134,8 @@ class UserProfile extends Component {
         axios.patch(`/api/users/${userId}/stores/${id}`, this.state.newStore).then((res) => {
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
+            alertify.success("Store Updated");
+
         })
     }
 
@@ -142,7 +145,23 @@ class UserProfile extends Component {
         axios.delete(`/api/users/${userId}/stores/${id}`).then((res) => {
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
+            alertify.success("Store Deleted")
         })
+    }
+
+    confirmStoreDelete = (id) => {
+
+        let that = this
+
+        alertify
+            .okBtn("DELETE")
+            .cancelBtn("CANCEL")
+
+        alertify.confirm("Are you sure you want to delete this store?", function () {
+            that.deleteStore(id)
+        }, function () {
+            alertify.log("Phew! That was close!");
+        });
     }
     ///////END OF STORE FUNCTIONS/////////////
 
@@ -167,6 +186,7 @@ class UserProfile extends Component {
         axios.post(`/api/users/${userId}/stores/${storeId}/products`, this.state.newProduct).then((res) => {
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
+            alertify.success("New Product Created");
         })
     }
 
@@ -185,6 +205,7 @@ class UserProfile extends Component {
         axios.patch(`/api/users/${userId}/stores/${storeId}/products/${productId}`, this.state.newProduct).then((res) => {
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
+            alertify.success("Product Updated")
         })
     }
 
@@ -193,7 +214,23 @@ class UserProfile extends Component {
         axios.delete(`/api/users/${userId}/stores/${storeId}/products/${productId}`).then((res) => {
             this.props.history.push(`/users/`)
             this.props.history.push(`/users/${userId}`)
+            alertify.success("Product Deleted")
         })
+    }
+
+    confirmProductDelete = (productId, storeId) => {
+
+        let that = this
+
+        alertify
+            .okBtn("DELETE")
+            .cancelBtn("CANCEL")
+
+        alertify.confirm("Are you sure you want to delete this product?", function () {
+            that.deleteProduct(productId, storeId)
+        }, function () {
+            alertify.log("Phew! That was close!");
+        });
     }
     ///////END OF PRODUCT FUNCTIONS
 
@@ -294,7 +331,7 @@ class UserProfile extends Component {
                                             <Button onClick={this.showProductForm}>NEW PRODUCT</Button>
                                         </ThemeProvider>
                                         <ThemeProvider theme={danger}>
-                                            <Button onClick={() => this.deleteStore(store._id)}>DELETE STORE</Button>
+                                            <Button onClick={() => this.confirmStoreDelete(store._id)}>DELETE STORE</Button>
                                         </ThemeProvider>
                                     </ButtonsWrap>
 
@@ -342,7 +379,7 @@ class UserProfile extends Component {
                                                         <Button onClick={() => this.showProductEditForm(product._id)}>EDIT PRODUCT</Button>
                                                     </ThemeProvider>
                                                     <ThemeProvider theme={danger}>
-                                                        <Button onClick={() => this.deleteProduct(product._id, store._id)}>DELETE PRODUCT</Button>
+                                                        <Button onClick={() => this.confirmProductDelete(product._id, store._id)}>DELETE PRODUCT</Button>
                                                     </ThemeProvider>
                                                 </ButtonsWrap>
                                             </ProductWrap>}
