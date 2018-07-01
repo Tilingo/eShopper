@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const StoreWrap = styled.div`
 width: 90vw;
-margin: 5% 0;
+margin-bottom: 5%;
 border: 2px solid;
 padding: 2%;
 background-color: orange;
@@ -16,8 +16,10 @@ form{
 }
 
 @media only screen and (min-width: 800px){
-    /* display: grid;
-    grid-template-columns: repeat(2, 1fr); */
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1em;
 }
 `
 

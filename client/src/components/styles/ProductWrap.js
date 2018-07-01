@@ -16,6 +16,10 @@ span{
     font-weight: bold;
     font-size: 1..5em;
 }
+
+@media only screen and (min-width: 800px){
+    max-width: 500px;
+}
 `
 
 export default ProductWrap

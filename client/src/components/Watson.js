@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FormWrapp from './styles/FormWrap';
 import axios from 'axios'
+import WatsonShow from './styles/WatsonShow';
 
 class Watson extends Component {
 
@@ -48,21 +49,20 @@ class Watson extends Component {
 
         return (
             <div>
-                <div>
-                    <p>
-                        {this.state.welcome}
-                    </p>
-                    <p>
-                        {this.state.input.text}
-                    </p>
-                    <p>
-                        
-                    </p>
-                </div>
+
+                {this.props.show
+                ? <div>
+
+                    <div>
+                        <button onClick={this.props.showWatson}>X</button>
+                    </div>
                 <FormWrapp onSubmit={this.watsonCall}>
                     <input onChange={this.handleChange} type="text" name="text" />
                     <button type="submit">PORFIS</button>
                 </FormWrapp>
+
+                </div>
+                : <WatsonShow onClick={this.props.showWatson}></WatsonShow>}
             </div>
         );
     }
