@@ -16,16 +16,15 @@ class Watson extends Component {
         const inputName = event.target.name
 
         const newState = { ...this.state }
-        newState[inputName] = userInput
+        newState.input[inputName] = userInput
 
         this.setState(newState)
     }
 
     watsonTest = (event) => {
         event.preventDefault()
-        console.log("I'm doing something")
-        axios.get('/watson', this.state).then((res) => {
-            console.log(res.data.response.text)
+        axios.post('/watson', this.state).then((res) => {
+            // console.log(this.state)
             console.log(res.data.response.output.text[0])
         })
     }

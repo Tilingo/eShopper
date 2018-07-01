@@ -8,12 +8,12 @@ const conversation = new watson.ConversationV1({
     version: '2018-02-16'
 });
 
-router.get('/', (req, res) => {
-    console.log(req.body)
+router.post('/', (req, res) => {
+    const input = req.body.input
 
     conversation.message({
         workspace_id: '650c45b2-4c75-4b41-83ac-3a2ea3df844e',
-        input: { 'text': 'hello' }
+        input
     }, function (err, response) {
         if (err)
             console.log('error:', err);
