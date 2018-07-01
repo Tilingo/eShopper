@@ -3,38 +3,13 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 
-
-var AssistantV1 = require('watson-developer-cloud/assistant/v1');
-
-// Set up Assistant service wrapper.
-var service = new AssistantV1({
-  username: 'de1f6746-530d-432f-b78f-48d76111daf1', // replace with service username
-  password: 'iIXvuaRH0RUP', // replace with service password
-  version: '2018-02-16'
-});
-
-var workspace_id = '650c45b2-4c75-4b41-83ac-3a2ea3df844e'; // replace with workspace ID
-
-// Start conversation with empty message.
-service.message({
-  workspace_id: workspace_id
-}, processResponse);
-
-// Process the service response.
-function processResponse(err, response) {
-  if (err) {
-    console.error(err); // something went wrong
-    return;
-  }
-
-  // Display the output from dialog, if any.
-  if (response.output.text.length != 0) {
-    console.log(response.output.text[0]);
-  }
-}
-
-
-
+// var ConversationV1 = require('watson-developer-cloud/conversation/v1');
+// var conversation = new ConversationV1({
+//   version: '2018-02-16',
+//   username: 'de1f6746-530d-432f-b78f-48d76111daf1',
+//   password: 'iIXvuaRH0RUP',
+//   url: 'https://gateway.watsonplatform.net/assistant/api/v1/workspaces/650c45b2-4c75-4b41-83ac-3a2ea3df844e/message/'
+// });
 
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI);
@@ -51,6 +26,7 @@ connection.on('error', (err) => {
 let usersRouter = require('./routes/users')
 let storesRouter = require('./routes/stores')
 let productsRouter = require('./routes/products')
+let watsonRouter = require('./routes/watson')
 var app = express();
 
 app.use(logger('dev'));
@@ -66,5 +42,6 @@ app.get('/', (req, res) => {
 app.use('/api/users', usersRouter)
 app.use('/api/users/:userId/stores', storesRouter)
 app.use('/api/users/:userId/stores/:storeId/products', productsRouter)
+app.use('/watson', watsonRouter)
 
 module.exports = app;

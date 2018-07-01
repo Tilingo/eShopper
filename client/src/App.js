@@ -7,6 +7,7 @@ import UserProfile from './components/UserProfile';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import AppWrap from './components/styles/AppWrap';
+import Watson from './components/Watson';
 
 class App extends Component {
 
@@ -60,6 +61,11 @@ class App extends Component {
       {...props} />
   )
 
+  watsonWrap = (props) => (
+    <Watson
+      {...props} />
+  )
+
   componentDidMount() {
     this.getUsers()
   }
@@ -73,6 +79,7 @@ class App extends Component {
             <Route exact path="/" render={this.signUpWrapp} />
             <Route path="/users/:id" render={this.userProfileWrap} />
             <Route exact path="/login" render={this.logInWrapp} />
+            <Route exact path="/watson" render={this.watsonWrap} />
           </Switch>
           <Footer />
         </AppWrap>
