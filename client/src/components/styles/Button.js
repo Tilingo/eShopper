@@ -16,7 +16,6 @@ cursor: pointer;
 
 &:active{
     box-shadow: -7px 11px 31px -8px rgba(0,0,0,0.75);
-    background-color: cyan;
 }
 
 &:focus{
@@ -35,7 +34,7 @@ const danger = {
 }
 
 const edit = {
-    bc: 'orange',
+    bc: 'black',
     c: 'beige'
 }
 

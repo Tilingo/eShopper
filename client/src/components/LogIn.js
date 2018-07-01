@@ -16,14 +16,15 @@ class LogIn extends Component {
         const user = this.props.users.find((user) => user.userName === this.state.userName)
 
         if (user === undefined) {
-            alertify.alert("Please enter a valid User Name");
+            alertify.error("Please enter a valid User Name");
         }
         else if (user.userName === this.state.userName && user.password === this.state.password) {
             this.props.history.push(`/users/${user._id}`)
             this.props.logIn(user._id)
+            alertify.success(`Welcome ${user.userName}`);
         }
         else {
-            alertify.alert("User Name or Password incorrect");
+            alertify.error("User Name or Password incorrect");
         }
     }
 

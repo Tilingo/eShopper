@@ -8,6 +8,8 @@ import UserProfileWrap from './styles/UserProfileWrap';
 import UserInfoWrap from './styles/UserInfoWrap';
 import ButtonsWrap from './styles/ButtonsWrap';
 import ProductWrap from './styles/ProductWrap';
+import StoreWrap from './styles/StoreWrap';
+import StoreInfo from './styles/StoreInfo';
 
 class UserProfile extends Component {
 
@@ -67,7 +69,7 @@ class UserProfile extends Component {
             alertify.success("User Updated");
         })
     }
-    
+
     deleteUser = () => {
         const userId = this.state.user._id
 
@@ -256,31 +258,38 @@ class UserProfile extends Component {
                             <label htmlFor="userName">User Name</label>
                             <input onChange={this.handleChange} type="text" name="userName" value={user.userName} />
 
-                            <ThemeProvider theme={primary}>
-                                <Button type="submit">UPDATE</Button>
-                            </ThemeProvider>
+                            <ButtonsWrap>
+
+                                <Button onClick={this.showUserForm}>GO BACK</Button>
+
+                                <ThemeProvider theme={primary}>
+                                    <Button type="submit">UPDATE</Button>
+                                </ThemeProvider>
+
+                            </ButtonsWrap>
 
                         </FormWrapp>
                         : <div>
                             <h3>User Name: {user.userName}</h3>
                             <h3>E-mail: {user.e_mail}</h3>
+
+                            <ButtonsWrap>
+
+                                <ThemeProvider theme={edit}>
+                                    <Button onClick={this.showUserForm}>EDIT USER</Button>
+                                </ThemeProvider>
+
+                                <ThemeProvider theme={create}>
+                                    <Button onClick={this.showStoreForm}>NEW STORE</Button>
+                                </ThemeProvider>
+
+                                <ThemeProvider theme={danger}>
+                                    <Button onClick={this.confirmUserDelete}>DELETE USER</Button>
+                                </ThemeProvider>
+
+                            </ButtonsWrap>
                         </div>}
 
-                    <ButtonsWrap>
-
-                        <ThemeProvider theme={edit}>
-                            <Button onClick={this.showUserForm}>EDIT USER</Button>
-                        </ThemeProvider>
-
-                        <ThemeProvider theme={create}>
-                            <Button onClick={this.showStoreForm}>NEW STORE</Button>
-                        </ThemeProvider>
-
-                        <ThemeProvider theme={danger}>
-                            <Button onClick={this.confirmUserDelete}>DELETE USER</Button>
-                        </ThemeProvider>
-
-                    </ButtonsWrap>
 
                     {this.state.storeForm
                         ? <FormWrapp onSubmit={this.handleStoreSubmit}>
@@ -300,15 +309,15 @@ class UserProfile extends Component {
                 {user.stores.map((store, i) => {
 
                     return (
-                        <UserInfoWrap key={i}>
+                        <StoreWrap key={i}>
 
                             {this.state.storeToEdit === store._id
                                 ? <FormWrapp onSubmit={(event) => this.handleEditStoreSubmit(event, store._id)}>
 
-                                    <label htmlFor="name">Store's name</label>
+                                    <label htmlFor="name">Store's Name</label>
                                     <input onChange={this.handleStoreChange} type="text" name="name" placeholder={store.name} />
 
-                                    <label htmlFor="name">Store's description</label>
+                                    <label htmlFor="name">Store's Description</label>
                                     <input onChange={this.handleStoreChange} type="text" name="description" placeholder={store.description} />
 
                                     <ButtonsWrap>
@@ -320,7 +329,7 @@ class UserProfile extends Component {
                                     </ButtonsWrap>
 
                                 </FormWrapp>
-                                : <div>
+                                : <StoreInfo>
                                     <h2>{store.name}</h2>
                                     <h3>{store.description}</h3>
 
@@ -347,7 +356,7 @@ class UserProfile extends Component {
                                             </ThemeProvider>
                                         </FormWrapp>
                                         : null}
-                                </div>
+                                </StoreInfo>
                             }
 
                             {store.products.map((product, ind) => {
@@ -356,16 +365,20 @@ class UserProfile extends Component {
                                     <div key={ind}>
                                         {this.state.productToEdit === product._id
                                             ? <FormWrapp onSubmit={(event) => this.handleEditProductSubmit(event, store._id, product._id)}>
+                                                <label htmlFor="name">Product's Name</label>
                                                 <input onChange={this.handleProductChange} type="text" name="name" placeholder={product.name} />
+                                                <label htmlFor="price">Product's Price</label>
                                                 <input onChange={this.handleProductChange} type="number" name="price" placeholder={product.price} />
+                                                <label htmlFor="description">Product's Description</label>
                                                 <input onChange={this.handleProductChange} type="text" name="description" placeholder={product.description} />
+                                                <label htmlFor="qty">Product's in Stock</label>
                                                 <input onChange={this.handleProductChange} type="number" name="qty" placeholder={product.qty} />
 
                                                 <ButtonsWrap>
+                                                    <Button onClick={this.closeProductEditForm}>GO BACK</Button>
                                                     <ThemeProvider theme={primary}>
                                                         <Button type="submit">UPDATE</Button>
                                                     </ThemeProvider>
-                                                    <Button onClick={this.closeProductEditForm}>GO BACK</Button>
                                                 </ButtonsWrap>
 
                                             </FormWrapp>
@@ -388,7 +401,7 @@ class UserProfile extends Component {
 
                                 )
                             })}
-                        </UserInfoWrap>
+                        </StoreWrap>
                     )
                 })}
 

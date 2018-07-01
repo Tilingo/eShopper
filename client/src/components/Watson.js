@@ -7,7 +7,9 @@ class Watson extends Component {
     state = {
         input: {
             text: ""
-        }
+        },
+        watson: [],
+        welcome: ''
     }
 
 
@@ -21,24 +23,47 @@ class Watson extends Component {
         this.setState(newState)
     }
 
-    watsonTest = (event) => {
+    watsonCall = (event) => {
         event.preventDefault()
         axios.post('/watson', this.state).then((res) => {
-            // console.log(this.state)
             console.log(res.data.response.output.text[0])
+            const newMessage = [...this.state.watson]
+             newMessage.push(res.data.response.output.text[0])
+            console.log(newMessage)
+            this.setState({ watson: newMessage })
+
         })
     }
 
-    // componentDidMount() {
-    //     this.watsonTest()
-    // }
+    componentDidMount() {
+        axios.get('/watson').then((res) => {
+            // console.log(res.data.response.output.text[0])
+            this.setState({ welcome: res.data.response.output.text[0] })
+        })
+    }
 
     render() {
+
+
+
         return (
-            <FormWrapp onSubmit={this.watsonTest}>
-                <input onChange={this.handleChange} type="text" name="text" />
-                <button type="submit">PORFIS</button>
-            </FormWrapp>
+            <div>
+                <div>
+                    <p>
+                        {this.state.welcome}
+                    </p>
+                    <p>
+                        {this.state.input.text}
+                    </p>
+                    <p>
+                        
+                    </p>
+                </div>
+                <FormWrapp onSubmit={this.watsonCall}>
+                    <input onChange={this.handleChange} type="text" name="text" />
+                    <button type="submit">PORFIS</button>
+                </FormWrapp>
+            </div>
         );
     }
 }

@@ -8,5 +8,4 @@ min-height: 85vh;
 flex-direction: column;
 align-items: center;
 `
-
 export default UserProfileWrap

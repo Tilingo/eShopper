@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const UserInfoWrap = styled.div`
+const StoreWrap = styled.div`
 width: 90vw;
 margin: 5% 0;
 border: 2px solid;
@@ -16,10 +16,9 @@ form{
 }
 
 @media only screen and (min-width: 800px){
-    width: 40vw;
-    align-self: flex-start;
-    margin: 5%;
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr); */
 }
 `
 
-export default UserInfoWrap
+export default StoreWrap

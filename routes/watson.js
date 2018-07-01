@@ -8,6 +8,17 @@ const conversation = new watson.ConversationV1({
     version: '2018-02-16'
 });
 
+router.get('/', (req, res) => {
+    conversation.message({
+        workspace_id: '650c45b2-4c75-4b41-83ac-3a2ea3df844e',
+    }, function (err, response) {
+        if (err)
+            console.log('error:', err);
+        else
+            res.send({ response });
+    });
+});
+
 router.post('/', (req, res) => {
     const input = req.body.input
 
@@ -18,8 +29,8 @@ router.post('/', (req, res) => {
         if (err)
             console.log('error:', err);
         else
-            res.send({response});
+            res.send({ response });
     });
-  });
+});
 
-  module.exports = router;
+module.exports = router;
