@@ -41,7 +41,7 @@ class LogIn extends Component {
         return (
             <SignUpWrap>
                 <h1>Log In</h1>
-                <FormWrapp onSubmit={this.handleSubmit}>
+                <FormWrapp onSubmit={this.handleSubmit} autoComplete="off">
                     <input onChange={this.handleChange} type="text" name="userName" placeholder="User Name" />
                     <input onChange={this.handleChange} type="password" name="password" placeholder="Password" />
                     <Button primary onClick={this.searchUser}>Log In</Button>

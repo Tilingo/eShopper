@@ -79,7 +79,7 @@ class Watson extends Component {
                             </WatsonMessage>
                         </ChatHistory>
 
-                        <form onSubmit={this.watsonCall}>
+                        <form onSubmit={this.watsonCall} autoComplete="off">
                             <input id="input" onChange={this.handleChange} type="text" name="text" />
                             <button type="submit" onClick={this.clearInput}>SEND</button>
                         </form>

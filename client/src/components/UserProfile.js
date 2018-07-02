@@ -261,7 +261,7 @@ class UserProfile extends Component {
                 <UserInfoWrap>
                     <h1>Profile</h1>
                     {this.state.userForm
-                        ? <FormWrapp onSubmit={this.handleSubmit}>
+                        ? <FormWrapp onSubmit={this.handleSubmit} autoComplete="off">
                             <label htmlFor="e_mail">E-mail Address</label>
                             <input onChange={this.handleChange} type="text" name="e_mail" value={user.e_mail} />
 
@@ -302,7 +302,7 @@ class UserProfile extends Component {
 
 
                     {this.state.storeForm
-                        ? <FormWrapp onSubmit={this.handleStoreSubmit}>
+                        ? <FormWrapp onSubmit={this.handleStoreSubmit} autoComplete="off">
                             <input onChange={this.handleStoreChange} type="text" name="name" placeholder="My Example's Store" />
                             <input onChange={this.handleStoreChange} type="text" name="description" placeholder="My store is amazing and has great products" />
                             <ThemeProvider theme={primary}>
@@ -322,7 +322,7 @@ class UserProfile extends Component {
                         <StoreWrap key={i}>
 
                             {this.state.storeToEdit === store._id
-                                ? <FormWrapp onSubmit={(event) => this.handleEditStoreSubmit(event, store._id)}>
+                                ? <FormWrapp onSubmit={(event) => this.handleEditStoreSubmit(event, store._id)} autoComplete="off">
 
                                     <label htmlFor="name">Store's Name</label>
                                     <input onChange={this.handleStoreChange} type="text" name="name" placeholder={store.name} />
@@ -356,7 +356,7 @@ class UserProfile extends Component {
                                     </ButtonsWrap>
 
                                     {this.state.productForm
-                                        ? <FormWrapp onSubmit={(event) => this.handleProductSubmit(event, store._id)}>
+                                        ? <FormWrapp onSubmit={(event) => this.handleProductSubmit(event, store._id)} autoComplete="off">
                                             <input onChange={this.handleProductChange} type="text" name="name" placeholder="Product's Name" />
                                             <input onChange={this.handleProductChange} type="number" name="price" placeholder="Product's Price" />
                                             <input onChange={this.handleProductChange} type="text" name="description" placeholder="Product's Description" />
@@ -374,7 +374,7 @@ class UserProfile extends Component {
 
                                     <ProductGrid key={ind}>
                                         {this.state.productToEdit === product._id
-                                            ? <FormWrapp onSubmit={(event) => this.handleEditProductSubmit(event, store._id, product._id)}>
+                                            ? <FormWrapp onSubmit={(event) => this.handleEditProductSubmit(event, store._id, product._id)} autoComplete="off">
                                                 <label htmlFor="name">Product's Name</label>
                                                 <input onChange={this.handleProductChange} type="text" name="name" placeholder={product.name} />
                                                 <label htmlFor="price">Product's Price</label>

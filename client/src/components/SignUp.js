@@ -39,7 +39,7 @@ class SignUp extends Component {
                 <h1>Welcome!</h1>
                 <h3>Currently eShopper is under construction, so why don't you start creating your store too!</h3>
                 <h4>Sign up now and start creating stores</h4>
-                <FormWrap onSubmit={this.handleSubmit}>
+                <FormWrap onSubmit={this.handleSubmit} autoComplete="off">
                     <input onChange={this.handleChange} type="email" name="e_mail" placeholder="E-mail address" autoComplete="email"/>
                     <input onChange={this.handleChange} type="text" name="userName" placeholder="User Name" autoComplete="username"/>
                     <input onChange={this.handleChange} type="password" name="password" placeholder="Password" autoComplete="current-password"/>
