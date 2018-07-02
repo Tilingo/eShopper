@@ -61,7 +61,7 @@ Inside the user profile, lives an instance of IBM Watson Assistant. This is a ve
 <summary>ERD</summary>
 <br>
 
-![Image of Wireframe](https://github.com/Tilingo/eShopper/blob/master/public/images/ERD.jpg)
+![Image of ERD](https://github.com/Tilingo/eShopper/blob/master/public/images/ERD.jpg)
 
 </details>
 
