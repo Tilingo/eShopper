@@ -10,8 +10,6 @@ border-radius: 5px;
 
 @media only screen and (min-width: 800px){
     max-width: 500px;
-    /* align-self: flex-start; */
-    /* margin: 5%; */
 }
 `
 

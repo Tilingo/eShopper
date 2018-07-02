@@ -10,7 +10,6 @@ import ButtonsWrap from './styles/ButtonsWrap';
 import ProductWrap from './styles/ProductWrap';
 import StoreWrap from './styles/StoreWrap';
 import StoreInfo from './styles/StoreInfo';
-import ProductGrid from './styles/ProductGrid';
 import Watson from './Watson';
 
 class UserProfile extends Component {
@@ -372,7 +371,7 @@ class UserProfile extends Component {
                             {store.products.map((product, ind) => {
                                 return (
 
-                                    <ProductGrid key={ind}>
+                                    <div key={ind}>
                                         {this.state.productToEdit === product._id
                                             ? <FormWrapp onSubmit={(event) => this.handleEditProductSubmit(event, store._id, product._id)} autoComplete="off">
                                                 <label htmlFor="name">Product's Name</label>
@@ -409,7 +408,7 @@ class UserProfile extends Component {
                                                 </ButtonsWrap>
                                             </ProductWrap>}
 
-                                    </ProductGrid>
+                                    </div>
 
                                 )
                             })}
