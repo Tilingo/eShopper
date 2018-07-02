@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import FormWrapp from './styles/FormWrap';
 import axios from 'axios'
 import WatsonShow from './styles/WatsonShow';
 import Chat from './styles/Chat';
@@ -50,6 +49,11 @@ class Watson extends Component {
     
     clearWatson = () => {
         this.setState({ watson: '' })
+        this.setState({ user: '' })
+    }
+
+    clearInput = () => {
+        document.getElementById("input").value = ""
     }
 
     render() {
@@ -76,8 +80,8 @@ class Watson extends Component {
                         </ChatHistory>
 
                         <form onSubmit={this.watsonCall}>
-                            <input onChange={this.handleChange} type="text" name="text" />
-                            <button type="submit">SEND</button>
+                            <input id="input" onChange={this.handleChange} type="text" name="text" />
+                            <button type="submit" onClick={this.clearInput}>SEND</button>
                         </form>
 
                     </Chat>
