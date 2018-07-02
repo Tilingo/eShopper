@@ -12,6 +12,11 @@ background-color: black;
 border: none;
 background-image: url('https://www.betterbuys.com/wp-content/uploads/2016/02/Watson-Analytics.png');
 background-size: contain;
+cursor: pointer;
+
+&:focus{
+    outline: none;
+}
 
 @media only screen and (min-width: 800px){
     width: 100px;

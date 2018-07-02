@@ -340,7 +340,7 @@ class UserProfile extends Component {
 
                                 </FormWrapp>
                                 : <StoreInfo>
-                                    <h2>{store.name}</h2>
+                                    <h1>{store.name}</h1>
                                     <h3>{store.description}</h3>
 
                                     <ButtonsWrap>
@@ -394,7 +394,7 @@ class UserProfile extends Component {
                                             </FormWrapp>
 
                                             : <ProductWrap>
-                                                <h3>{product.name}</h3>
+                                                <h2>{product.name}</h2>
                                                 <p><span>Price:</span> ${product.price}</p>
                                                 <p><span>Description:</span> {product.description}</p>
                                                 <p><span>QTY:</span> {product.qty}</p>

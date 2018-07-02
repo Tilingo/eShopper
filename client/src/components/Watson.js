@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import FormWrapp from './styles/FormWrap';
 import axios from 'axios'
 import WatsonShow from './styles/WatsonShow';
+import Chat from './styles/Chat';
+import WatsonMessage from './styles/WatsonMessage';
+import UserMessage from './styles/UserMessage';
+import ChatHistory from './styles/ChatHistory';
 
 class Watson extends Component {
 
@@ -9,8 +13,9 @@ class Watson extends Component {
         input: {
             text: ""
         },
-        watson: [],
-        welcome: ''
+        watson: '',
+        welcome: '',
+        user: ''
     }
 
 
@@ -26,21 +31,25 @@ class Watson extends Component {
 
     watsonCall = (event) => {
         event.preventDefault()
+        this.setState({user: this.state.input.text})
         axios.post('/watson', this.state).then((res) => {
-            console.log(res.data.response.output.text[0])
-            const newMessage = [...this.state.watson]
-             newMessage.push(res.data.response.output.text[0])
-            console.log(newMessage)
-            this.setState({ watson: newMessage })
-
+            // console.log(res.data.response.output.text[0])
+            // const newMessage = [...this.state.watson]
+            // newMessage.push(res.data.response.output.text[0])
+            // console.log(newMessage)
+            this.setState({ watson: res.data.response.output.text[0] })
         })
     }
 
-    componentDidMount() {
+    watsonWelcome = () => {
         axios.get('/watson').then((res) => {
             // console.log(res.data.response.output.text[0])
             this.setState({ welcome: res.data.response.output.text[0] })
         })
+    }
+    
+    clearWatson = () => {
+        this.setState({ watson: '' })
     }
 
     render() {
@@ -51,18 +60,28 @@ class Watson extends Component {
             <div>
 
                 {this.props.show
-                ? <div>
+                    ? <Chat>
 
-                    <div>
                         <button onClick={this.props.showWatson}>X</button>
-                    </div>
-                <FormWrapp onSubmit={this.watsonCall}>
-                    <input onChange={this.handleChange} type="text" name="text" />
-                    <button type="submit">PORFIS</button>
-                </FormWrapp>
+                        <ChatHistory>
+                            <WatsonMessage>
+                                <p>{this.state.welcome}</p>
+                            </WatsonMessage>
+                            <UserMessage>
+                                <p>{this.state.user}</p>
+                            </UserMessage>
+                            <WatsonMessage>
+                                <p>{this.state.watson}</p>
+                            </WatsonMessage>
+                        </ChatHistory>
 
-                </div>
-                : <WatsonShow onClick={this.props.showWatson}></WatsonShow>}
+                        <form onSubmit={this.watsonCall}>
+                            <input onChange={this.handleChange} type="text" name="text" />
+                            <button type="submit">SEND</button>
+                        </form>
+
+                    </Chat>
+                    : <WatsonShow onClick={() => { this.props.showWatson(), this.clearWatson(), this.watsonWelcome() }}></WatsonShow>}
             </div>
         );
     }
