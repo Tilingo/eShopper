@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import FormWrapp from './styles/FormWrap';
-import { Button } from './styles/Button';
 import SignUpWrap from './styles/SignUpWrap';
+import { ThemeProvider } from 'styled-components';
+import { Button, primary } from './styles/Button';
+
 import alertify from 'alertify.js'
 
 class LogIn extends Component {
@@ -44,7 +46,9 @@ class LogIn extends Component {
                 <FormWrapp onSubmit={this.handleSubmit} autoComplete="off">
                     <input onChange={this.handleChange} type="text" name="userName" placeholder="User Name" />
                     <input onChange={this.handleChange} type="password" name="password" placeholder="Password" />
-                    <Button primary onClick={this.searchUser}>Log In</Button>
+                    <ThemeProvider theme={primary}>
+                        <Button primary onClick={this.searchUser}>Log In</Button>
+                    </ThemeProvider>
                 </FormWrapp>
             </SignUpWrap>
         );

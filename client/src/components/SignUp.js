@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import SignUpWrapp from './styles/SignUpWrap';
-import { Button } from './styles/Button';
+import { ThemeProvider } from 'styled-components';
+import { Button, primary } from './styles/Button';
+
+
 import FormWrap from './styles/FormWrap';
 import alertify from 'alertify.js'
 
@@ -40,10 +43,12 @@ class SignUp extends Component {
                 <h3>Currently eShopper is under construction, so why don't you start creating your store too!</h3>
                 <h4>Sign up now and start creating stores</h4>
                 <FormWrap onSubmit={this.handleSubmit} autoComplete="off">
-                    <input onChange={this.handleChange} type="email" name="e_mail" placeholder="E-mail address" autoComplete="email"/>
-                    <input onChange={this.handleChange} type="text" name="userName" placeholder="User Name" autoComplete="username"/>
-                    <input onChange={this.handleChange} type="password" name="password" placeholder="Password" autoComplete="current-password"/>
-                    <Button type="submit" primary>SIGN UP</Button>
+                    <input onChange={this.handleChange} type="email" name="e_mail" placeholder="E-mail address" autoComplete="email" />
+                    <input onChange={this.handleChange} type="text" name="userName" placeholder="User Name" autoComplete="username" />
+                    <input onChange={this.handleChange} type="password" name="password" placeholder="Password" autoComplete="current-password" />
+                    <ThemeProvider theme={primary}>
+                        <Button type="submit">SIGN UP</Button>
+                    </ThemeProvider>
                 </FormWrap>
                 <p>Already have an account? <Link to="/login" >Log in</Link></p>
             </SignUpWrapp>
