@@ -6,17 +6,17 @@ This is my third project for WDI16 at General Assembly and my first app using th
 
 This time I'm building the user interface for an e-commerce website. It's actually the seller's user interface for building the inventory.
 
-The user can sign up (or logged in if already has an account), then it can create stores, and within the stores it can create products.
+The user can sign up (or log in if already has an account), then it can create stores, and within the stores, it can create products.
 
 They can create, read, update and delete any store, product or user.
 
 The user keeps logged in until press "Log out" on the navbar.
 
-The log in uses the browser local storage to simulate a log in experience.
+The login uses the browser local storage to simulate a login experience.
 
-This app doesn't use any type of encryptation for the password. The log in interface was created only to simulate the log in experience for UX purposes on this app.
+This app doesn't use any type of encryption for the password. The login interface was created only to simulate the login experience for UX purposes on this app.
 
-Inside the user profile, lives an instance of IBM Watson Assistant. This is a very simple example of the Watson Assistant, and it's being used to show my knoledge of using restful API and also for experimenting with the Watson technology.
+Inside the user profile, lives an instance of IBM Watson Assistant. This is a very simple example of the Watson Assistant, and it's being used to show my knowledge of using restful API and also for experimenting with the Watson technology.
 
 ### [Live eShopper site](https://wdi16-eshopper.herokuapp.com/)
 
@@ -51,7 +51,9 @@ Inside the user profile, lives an instance of IBM Watson Assistant. This is a ve
 <summary>Wireframe</summary>
 <br>
 
-![Image of Wireframe](https://github.com/Tilingo/menu-builder/blob/master/public/images/wireframe.jpg)
+![Image of Wireframe](https://github.com/Tilingo/eShopper/blob/master/public/images/wireframe1.jpg)
+
+![Image of Wireframe](https://github.com/Tilingo/eShopper/blob/master/public/images/wireframe2.jpg)
 
 </details>
 
@@ -59,12 +61,11 @@ Inside the user profile, lives an instance of IBM Watson Assistant. This is a ve
 <summary>ERD</summary>
 <br>
 
-![Image of Wireframe](https://github.com/Tilingo/menu-builder/blob/master/public/images/ERD.jpg)
+![Image of Wireframe](https://github.com/Tilingo/eShopper/blob/master/public/images/ERD.jpg)
 
 </details>
 
 ## Future Development
 
-* Create an user model for having privacy on the menus edit
-* Have themes templates for the menus
-* Create restaurant categories
+* Develope the buyer interface of the store
+* Use a real encryption and authentication system
