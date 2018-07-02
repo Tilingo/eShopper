@@ -10,11 +10,11 @@ class Watson extends Component {
 
     state = {
         input: {
-            text: ""
+            text: ''
         },
-        watson: '',
-        welcome: '',
-        user: ''
+        watson: [],
+        user: [],
+        welcome: ''
     }
 
 
@@ -30,35 +30,45 @@ class Watson extends Component {
 
     watsonCall = (event) => {
         event.preventDefault()
-        this.setState({user: this.state.input.text})
+
+        const userMessage = [...this.state.user, this.state.input.text]
+        this.setState({ user: userMessage })
+
         axios.post('/watson', this.state).then((res) => {
-            // console.log(res.data.response.output.text[0])
-            // const newMessage = [...this.state.watson]
-            // newMessage.push(res.data.response.output.text[0])
-            // console.log(newMessage)
-            this.setState({ watson: res.data.response.output.text[0] })
+
+            const newMessage = [...this.state.watson, res.data.response.output.text[0]]
+            this.setState({ watson: newMessage })
         })
     }
 
     watsonWelcome = () => {
         axios.get('/watson').then((res) => {
-            // console.log(res.data.response.output.text[0])
             this.setState({ welcome: res.data.response.output.text[0] })
         })
     }
-    
+
     clearWatson = () => {
-        this.setState({ watson: '' })
-        this.setState({ user: '' })
+        this.setState({ watson: [] })
+        this.setState({ user: [] })
     }
 
     clearInput = () => {
         document.getElementById("input").value = ""
     }
 
+    componentDidUpdate() {
+        if (this.props.show) {
+            this.el.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    setupWatson = () => {
+        this.props.showWatson()
+        this.clearWatson()
+        this.watsonWelcome()
+    }
+
     render() {
-
-
 
         return (
             <div>
@@ -67,16 +77,23 @@ class Watson extends Component {
                     ? <Chat>
 
                         <button onClick={this.props.showWatson}>X</button>
-                        <ChatHistory>
+                        <ChatHistory id="chat">
                             <WatsonMessage>
                                 <p>{this.state.welcome}</p>
                             </WatsonMessage>
-                            <UserMessage>
-                                <p>{this.state.user}</p>
-                            </UserMessage>
-                            <WatsonMessage>
-                                <p>{this.state.watson}</p>
-                            </WatsonMessage>
+                            {this.state.user.map((question, i) => {
+                                return (
+                                    <div>
+                                        <UserMessage>
+                                            <p>{question}</p>
+                                        </UserMessage>
+                                        <WatsonMessage>
+                                            <p>{this.state.watson[i]}</p>
+                                        </WatsonMessage>
+                                    </div>
+                                )
+                            })}
+                            <div ref={el => { this.el = el; }} />
                         </ChatHistory>
 
                         <form onSubmit={this.watsonCall} autoComplete="off">
@@ -85,7 +102,7 @@ class Watson extends Component {
                         </form>
 
                     </Chat>
-                    : <WatsonShow onClick={() => { this.props.showWatson(), this.clearWatson(), this.watsonWelcome() }}></WatsonShow>}
+                    : <WatsonShow onClick={this.setupWatson} />}
             </div>
         );
     }
