@@ -29,7 +29,7 @@ Inside the user profile, lives an instance of IBM Watson Assistant. This is a ve
 * Styled Components
 * Watson Developer Cloud
 * Alertify.js
-* [Trello](https://trello.com/b/b8ovminh/rest-menu-builders)
+* [Trello](https://trello.com/b/xhdN59A8/eshopper)
 
 ## Features
 
